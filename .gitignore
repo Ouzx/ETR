@@ -57,4 +57,19 @@ sysinfo.txt
 
 # Crashlytics generated file
 crashlytics-build.properties
+/sources
+/game/EvolutionToRevolution
+/game/EvolutionToRevolution-Urp/.vscode
+/game/EvolutionToRevolution-Urp/Library
+/game/EvolutionToRevolution-Urp/Logs
+/game/EvolutionToRevolution-Urp/obj
+/game/EvolutionToRevolution-Urp/Packages
+/game/EvolutionToRevolution-Urp/ProjectSettings
+/game/EvolutionToRevolution-Urp/Temp
+/game/EvolutionToRevolution-Urp/UserSettings
+/game/EvolutionToRevolution-Urp/Assembly-CSharp.csproj
+/game/EvolutionToRevolution-Urp/Assembly-CSharp-Editor.csproj
+/game/EvolutionToRevolution-Urp/EvolutionToRevolution-Urp.sln
+/game/EvolutionToRevolution-Urp/NavMeshComponents.csproj
+/game/EvolutionToRevolution-Urp/NavMeshComponentsEditor.csproj
 
