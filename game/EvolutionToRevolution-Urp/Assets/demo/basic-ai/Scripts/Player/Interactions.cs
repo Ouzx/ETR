@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class Interactions : MonoBehaviour
 {
+    Player player;
+    Movement movement;
     void Start()
     {
-
+        player = GetComponent<Player>();
+        movement = GetComponent<Movement>();
     }
 
     #region Attack
@@ -36,12 +39,14 @@ public class Interactions : MonoBehaviour
     #endregion
 
     #region Eating
-    private void Eat(Transform food)
+    // keep in mind last food
+    public void Eat(Transform food)
     {
-        // agent.SetDestination(transform.position);
+        // movement.Move(food.position);
         // transform.LookAt(food);
-        // foodName = food.name;
-        // food.GetComponent<Food>().Eat(biteAmount);
+        player.foodName = food.name;
+        food.GetComponent<Food>().Eat(player.biteAmount);
+
     }
     #endregion
 }

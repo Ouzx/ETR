@@ -73,3 +73,6 @@ crashlytics-build.properties
 /game/EvolutionToRevolution-Urp/NavMeshComponents.csproj
 /game/EvolutionToRevolution-Urp/NavMeshComponentsEditor.csproj
 
+game/ETR/Library/
+game/ETR/Temp/
+game/ETR/Logs/

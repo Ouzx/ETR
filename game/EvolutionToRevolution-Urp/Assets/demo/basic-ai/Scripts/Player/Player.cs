@@ -73,7 +73,8 @@ public class Player : MonoBehaviour
     #endregion
     private void Start()
     {
-
+        movement = GetComponent<Movement>();
+        interactions = GetComponent<Interactions>();
 
         healthBar = this.gameObject.transform.GetChild(0).GetChild(0).GetComponent<Slider>();
         energyBar = this.gameObject.transform.GetChild(0).GetChild(1).GetComponent<Slider>();
@@ -88,15 +89,12 @@ public class Player : MonoBehaviour
 
         TimeCycle.instance.OnDawn += Dawn;
         TimeCycle.instance.OnSunSet += Sunset;
-
-
     }
+
+
     private void Update()
     {
-        if (isHungry)
-        {
-
-        }
+        movement.SearchForFood();
 
         // Starve();
         // if (collisions.closestFood == null) Patrolling();
@@ -132,15 +130,15 @@ public class Player : MonoBehaviour
     }
     private void HealthRegen()
     {
-        Debug.Log("Healed");
+        // Debug.Log("Healed");
     }
     private void EnergyRegen()
     {
-        Debug.Log("Regenned Energy");
+        // Debug.Log("Regenned Energy");
     }
     private void AtBaseRegen()
     {
-        Debug.Log("AtBaseRegen");
+        // Debug.Log("AtBaseRegen");
     }
     private void GetDamage(float cost)
     {
@@ -149,6 +147,7 @@ public class Player : MonoBehaviour
     }
     private void GetTired(float cost)
     {
+        // Range costs energy too
         float tempCost = energy - cost;
         if (energy <= 0)
         {
@@ -172,10 +171,10 @@ public class Player : MonoBehaviour
     }
     private void OnDrawGizmosSelected()
     {
-        // UnityEditor.Handles.color = Color.blue;
-        // UnityEditor.Handles.DrawWireDisc(transform.position, transform.up, sightRange);
-        // UnityEditor.Handles.color = Color.green;
-        // UnityEditor.Handles.DrawWireDisc(transform.position, transform.up, walkPointRange);
+        UnityEditor.Handles.color = Color.blue;
+        UnityEditor.Handles.DrawWireDisc(transform.position, transform.up, sightRange);
+        UnityEditor.Handles.color = Color.red;
+        UnityEditor.Handles.DrawWireDisc(transform.position, transform.up, attackRange);
     }
 
 }
