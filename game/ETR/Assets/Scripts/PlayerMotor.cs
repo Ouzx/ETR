@@ -13,15 +13,31 @@ public class PlayerMotor : MonoBehaviour
     [SerializeField] bool isWalkPointSet;
     [SerializeField] float walkPointRange;
 
+    Transform target;
     NavMeshAgent agent;
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        StartCoroutine(nameof(TargetChecker));
+    }
+    IEnumerator TargetChecker()
+    {
+        if (target != null) MoveToPoint(target.position);
+        yield return new WaitForSeconds(1);
     }
 
     public void MoveToPoint(Vector3 point)
     {
         agent.SetDestination(point);
+    }
+
+    public void FollowTarget(Interactable newTarget)
+    {
+        target = newTarget.transform;
+    }
+    public void StopFollowingTarget()
+    {
+        target = null;
     }
     public void Patrol()
     {
@@ -43,6 +59,7 @@ public class PlayerMotor : MonoBehaviour
         if (Physics.Raycast(walkPoint, -transform.up, 2f, GroundLayer))
             isWalkPointSet = true;
     }
+
 
     void OnDrawGizmosSelected()
     {
