@@ -5,15 +5,20 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerMotor))]
 public class PlayerController : MonoBehaviour
 {
+    public Stats stats;
     public Interactable focus;
     Interactable me;
-    // Remove SIGHTRANGE after PLAYER.STATS CLASS
-    [SerializeField] float sightRange;
+
     PlayerMotor motor;
+    float sightRange;
 
     // Collisions
     public Transform nearestFood, nearestEnemy;
     Transform _nearestFood, _nearestEnemy;
+    void Awake()
+    {
+        sightRange = stats.sightRange;
+    }
     void Start()
     {
         me = GetComponent<Interactable>();
@@ -54,6 +59,7 @@ public class PlayerController : MonoBehaviour
     }
     void Update()
     {
+        // TODO: ENEMY CASES: FIGHT OR RUN AND EATING
         if (nearestEnemy != null) { SetFocus(nearestEnemy.GetComponent<Interactable>()); } // Attack or Escape
         else if (nearestFood != null) { SetFocus(nearestFood.GetComponent<Interactable>()); } // Eat
         else if (nearestFood == null) { RemoveFocus(); motor.Patrol(); } // Patrol
@@ -78,11 +84,4 @@ public class PlayerController : MonoBehaviour
         motor.StopFollowingTarget();
     }
 
-
-
-    void OnDrawGizmosSelected()
-    {
-        UnityEditor.Handles.color = Color.blue;
-        UnityEditor.Handles.DrawWireDisc(transform.position, transform.up, sightRange);
-    }
 }

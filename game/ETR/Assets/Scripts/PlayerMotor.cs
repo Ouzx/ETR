@@ -12,7 +12,7 @@ public class PlayerMotor : MonoBehaviour
      * - Patrol distance checker: 1f
      * - WalkPoint searcher distance checker: 2f
      * - Target Interaction range multiplier: 0.7f
-     * - LookTarget: Rotation Speed: 0.5f 
+     * - LookTarget: Rotation Speed: 50f 
     */
     public LayerMask GroundLayer, PlayerLayer, FoodLayer;
 
@@ -23,6 +23,10 @@ public class PlayerMotor : MonoBehaviour
 
     Transform target;
     NavMeshAgent agent;
+    void Awake()
+    {
+        walkPointRange = GetComponent<PlayerController>().stats.walkPointRange;
+    }
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -41,6 +45,7 @@ public class PlayerMotor : MonoBehaviour
         }
     }
 
+    #region Movement
     public void MoveToPoint(Vector3 point)
     {
         agent.SetDestination(point);
@@ -62,9 +67,9 @@ public class PlayerMotor : MonoBehaviour
     {
         Vector3 directon = (target.position - transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(directon.x, 0f, directon.z));
-        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 50f);
     }
-
+    #endregion
 
     #region  Patrolling
     public void Patrol()
@@ -88,12 +93,5 @@ public class PlayerMotor : MonoBehaviour
             isWalkPointSet = true;
     }
     #endregion
-
-
-    void OnDrawGizmosSelected()
-    {
-        UnityEditor.Handles.color = Color.green;
-        UnityEditor.Handles.DrawWireDisc(transform.position, transform.up, walkPointRange);
-    }
 
 }
