@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
     Transform _nearestFood, _nearestEnemy;
     void Awake()
     {
-        sightRange = stats.sightRange;
+        sightRange = stats.sightRange.GetMaxValue();
     }
     void Start()
     {

@@ -25,10 +25,10 @@ public class PlayerMotor : MonoBehaviour
     NavMeshAgent agent;
     void Awake()
     {
-        walkPointRange = GetComponent<PlayerController>().stats.walkPointRange;
     }
     void Start()
     {
+        walkPointRange = GetComponent<PlayerController>().stats.walkPointRange;
         agent = GetComponent<NavMeshAgent>();
         StartCoroutine(nameof(TargetChecker));
     }
