@@ -19,8 +19,9 @@ public class Stats : MonoBehaviour
     #region  Actions
     [Header("Abilities")]
     public float speed;
+    public float interactionSpeed; // Interaction speed per one second
     public float damage;
-    public float biteAmount;
+    // public Stat biteAmount;
     #endregion
 
     #region Ranges
