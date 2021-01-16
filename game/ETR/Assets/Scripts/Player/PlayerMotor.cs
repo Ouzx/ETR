@@ -11,25 +11,23 @@ public class PlayerMotor : MonoBehaviour
      * - Target checker delay: 0.1f
      * - Patrol distance checker: 1f
      * - WalkPoint searcher distance checker: 2f
-     * - Target Interaction range multiplier: 0.7f
      * - LookTarget: Rotation Speed: 50f 
     */
     public LayerMask GroundLayer, PlayerLayer, FoodLayer;
+    Stats stats;
 
     // Patrolling
     [SerializeField] Vector3 walkPoint;
     [SerializeField] bool isWalkPointSet;
-    [SerializeField] float walkPointRange;
 
+    [SerializeField] NavMeshAgent agent;
     Transform target;
-    NavMeshAgent agent;
     void Awake()
     {
     }
     void Start()
     {
-        walkPointRange = GetComponent<PlayerController>().stats.walkPointRange;
-        agent = GetComponent<NavMeshAgent>();
+        stats = GetComponent<PlayerController>().stats;
         StartCoroutine(nameof(TargetChecker));
     }
     IEnumerator TargetChecker()
@@ -53,7 +51,7 @@ public class PlayerMotor : MonoBehaviour
 
     public void FollowTarget(Interactable newTarget)
     {
-        agent.stoppingDistance = GetComponent<Interactable>().interactionRange * 0.7f;
+        agent.stoppingDistance = stats.attackRange.GetMaxValue();
         agent.updateRotation = false;
         target = newTarget.transform;
     }
@@ -68,6 +66,11 @@ public class PlayerMotor : MonoBehaviour
         Vector3 directon = (target.position - transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(new Vector3(directon.x, 0f, directon.z));
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 50f);
+    }
+
+    public void SetSpeed(float speed)
+    {
+        agent.acceleration = speed;
     }
     #endregion
 
@@ -84,6 +87,7 @@ public class PlayerMotor : MonoBehaviour
     }
     void SearchWalkPoint()
     {
+        float walkPointRange = stats.walkPointRange;
         float randomZ = Random.Range(-walkPointRange, walkPointRange);
         float randomX = Random.Range(-walkPointRange, walkPointRange);
 

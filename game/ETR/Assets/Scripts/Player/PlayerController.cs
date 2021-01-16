@@ -10,15 +10,11 @@ public class PlayerController : MonoBehaviour
     Interactable me;
 
     PlayerMotor motor;
-    float sightRange;
 
     // Collisions
     public Transform nearestFood, nearestEnemy;
     Transform _nearestFood, _nearestEnemy;
-    void Awake()
-    {
-        sightRange = stats.sightRange.GetMaxValue();
-    }
+
     void Start()
     {
         me = GetComponent<Interactable>();
@@ -30,8 +26,8 @@ public class PlayerController : MonoBehaviour
     {
         while (true)
         {
-            Collider[] enemies = Physics.OverlapSphere(transform.position, sightRange, motor.PlayerLayer, QueryTriggerInteraction.Ignore);
-            Collider[] foods = Physics.OverlapSphere(transform.position, sightRange, motor.FoodLayer, QueryTriggerInteraction.Ignore);
+            Collider[] enemies = Physics.OverlapSphere(transform.position, stats.sightRange.GetMaxValue(), motor.PlayerLayer, QueryTriggerInteraction.Ignore);
+            Collider[] foods = Physics.OverlapSphere(transform.position, stats.sightRange.GetMaxValue(), motor.FoodLayer, QueryTriggerInteraction.Ignore);
             if (enemies.Length == 0) { nearestEnemy = null; _nearestEnemy = null; }
             else
             {

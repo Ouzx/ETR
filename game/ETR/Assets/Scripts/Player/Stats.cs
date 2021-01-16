@@ -101,6 +101,9 @@ public class Stats : MonoBehaviour
         attackingCost = power * coco.Attacking;
         tiringCost = power * coco.Tiring;
         nightCost = power * coco.Night;
+
+        // Player Effects
+        GetComponent<PlayerMotor>().SetSpeed(speed.GetValue());
     }
     void OnDrawGizmosSelected()
     {
