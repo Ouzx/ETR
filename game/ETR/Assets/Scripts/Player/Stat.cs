@@ -15,11 +15,10 @@ public class Stat
     }
 
     public float GetValue() => value;
-    public void SetValue(float value, bool alreadySet = false)
+    public void SetValue(float value)
     {
         this.value = value;
-        if (!alreadySet) temp.OnStatChanged();
+        // if (!alreadySet) temp.OnStatChanged();
 
     }
-
 }

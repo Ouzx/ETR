@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 
 [ExecuteAlways]
@@ -15,6 +16,19 @@ public class Clock : MonoBehaviour
     #region Events
     public event Action OnMorning;
     public event Action OnEvening;
+    public event Action OnSecond;
+    void Start()
+    {
+
+    }
+    IEnumerator SecondCounter()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1);
+            OnSecond?.Invoke();
+        }
+    }
     #endregion
 
     #region ClockParameters

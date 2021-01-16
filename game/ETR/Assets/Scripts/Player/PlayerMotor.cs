@@ -30,13 +30,18 @@ public class PlayerMotor : MonoBehaviour
         player = GetComponent<PlayerController>().player;
         StartCoroutine(nameof(TargetChecker));
     }
+    void Walk(Vector3 walkingPoint)
+    {
+        agent.SetDestination(walkingPoint);
+        player.GetTired(player.walkingCost);
+    }
     IEnumerator TargetChecker()
     {
         while (true)
         {
             if (target != null)
             {
-                agent.SetDestination(target.position);
+                Walk(target.position);
                 LookTarget();
             }
             yield return new WaitForSeconds(0.1f); // you can change it if player acts laggy
@@ -46,7 +51,7 @@ public class PlayerMotor : MonoBehaviour
     #region Movement
     public void MoveToPoint(Vector3 point)
     {
-        agent.SetDestination(point);
+        Walk(point);
     }
 
     public void FollowTarget(Interactable newTarget)

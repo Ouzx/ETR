@@ -3,16 +3,17 @@ using UnityEngine;
 
 public class Player : Stats
 {
+    [SerializeField] StatCoefficients stco;
+    [SerializeField] CostCoefficients coco;
+
     void Awake()
     {
         SetStats();
         OnStatChanged();
         Clock.instance.OnMorning += OnMorning;
         Clock.instance.OnEvening += OnEvening;
+        Clock.instance.OnSecond += OnSecondChanged;
     }
-
-    [SerializeField] StatCoefficients stco;
-    [SerializeField] CostCoefficients coco;
 
     void SetStats()
     {
@@ -28,11 +29,49 @@ public class Player : Stats
                 temp = this;
 
                 Stat _stat = (Stat)_field.GetValue(this);
-                _stat.SetValue(_stat.GetMaxValue(), true);
+                _stat.SetValue(_stat.GetMaxValue());
             }
         }
     }
 
+    #region Actions and Costs
+    public void GetDamage(float amount)
+    {
+        float tempAmont = health.GetValue() - amount;
+        if (tempAmont > 0)
+        {
+            health.SetValue(tempAmont);
+        }
+        else
+        {
+            DestroyMe();
+        }
+    }
+
+    public void GetTired(float amount)
+    {
+        float tempAmont = energy.GetValue() - amount;
+        if (tempAmont > 0)
+        {
+            energy.SetValue(tempAmont);
+        }
+        else
+        {
+            GetDamage(tiringCost);
+        }
+    }
+
+    public void Attack()
+    {
+        // Attack from Interactable not here.
+        GetTired(attackingCost);
+    }
+    public void DestroyMe()
+    {
+        Destroy(gameObject);
+    }
+
+    #endregion
 
     #region OnStatChanged
     public void OnStatChanged()
@@ -55,7 +94,7 @@ public class Player : Stats
         transform.localScale = Vector3.one * Mathf.Sqrt(power * stco.SizeViaPower);
 
         // COSTS
-        starvingCost = power * coco.Starving;
+        starvingCost = coco.Starving;
         walkingCost = power * coco.Walking;
         attackingCost = power * coco.Attacking;
         tiringCost = power * coco.Tiring;
@@ -65,7 +104,6 @@ public class Player : Stats
         GetComponent<PlayerMotor>().SetSpeed(speed.GetValue());
     }
     #endregion
-
 
     #region OnDayChanged
     bool nerf = false;
@@ -93,4 +131,12 @@ public class Player : Stats
         nerf = true;
     }
     #endregion
+
+    #region OnSecondChanged
+    void OnSecondChanged()
+    {
+        if (isHungry) GetTired(starvingAmount.GetValue());
+    }
+    #endregion
+
 }
