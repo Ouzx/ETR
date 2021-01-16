@@ -1,17 +1,42 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Reflection;
 using UnityEngine;
 
 public class Player : Stats
 {
+    void Awake()
+    {
+        SetStats();
+        OnStatChanged();
+        Clock.instance.OnMorning += OnMorning;
+        Clock.instance.OnEvening += OnEvening;
+    }
 
     [SerializeField] StatCoefficients stco;
     [SerializeField] CostCoefficients coco;
 
-    #region OnStatChanged
-    public override void OnStatChanged()
+    void SetStats()
     {
-        base.OnStatChanged();
+        // This method, iterates over all Stat fields of this instance.
+        // and point this class to player.temp class
+        FieldInfo[] fields = typeof(Player).GetFields();
+        foreach (FieldInfo _field in fields)
+        {
+            if (_field.FieldType == typeof(Stat))
+            {
+                FieldInfo field = typeof(Stat).GetField("temp");
+                Player temp = (Player)field.GetValue(_field.GetValue(this));
+                temp = this;
+
+                Stat _stat = (Stat)_field.GetValue(this);
+                _stat.SetValue(_stat.GetMaxValue(), true);
+            }
+        }
+    }
+
+
+    #region OnStatChanged
+    public void OnStatChanged()
+    {
         Invoke(nameof(UpdateStats), .1f);
     }
     void UpdateStats()
@@ -40,15 +65,9 @@ public class Player : Stats
         GetComponent<PlayerMotor>().SetSpeed(speed.GetValue());
     }
     #endregion
-    void Awake()
-    {
-        Clock.instance.OnMorning += OnMorning;
-        Clock.instance.OnEvening += OnEvening;
-    }
-    private void Update()
-    {
-        Debug.Log(Clock.instance.dayTime);
-    }
+
+
+    #region OnDayChanged
     bool nerf = false;
     void OnMorning()
     {
@@ -73,4 +92,5 @@ public class Player : Stats
         sightRange.SetMaxValue(sightRange.GetMaxValue() + nightCost * deBuffMultiplier);
         nerf = true;
     }
+    #endregion
 }

@@ -1,44 +1,9 @@
 ﻿using System;
-using System.Reflection;
 using UnityEngine;
-
-[ExecuteInEditMode]
 public class Stats : MonoBehaviour
 {
     new public string name;
     public InteractableTypes InteractableType;
-    void Awake()
-    {
-        SetStats();
-        OnStatChanged();
-
-    }
-
-    void SetStats()
-    {
-        // This method, iterates over all Stat fields of this instance.
-        // and point this class to stats.temp class
-        FieldInfo[] fields = typeof(Stats).GetFields();
-        foreach (FieldInfo _field in fields)
-        {
-            if (_field.FieldType == typeof(Stat))
-            {
-                FieldInfo field = typeof(Stat).GetField("temp");
-                Stats temp = (Stats)field.GetValue(_field.GetValue(this));
-                temp = this;
-            }
-        }
-
-        // health.temp = this;
-        // energy.temp = this;
-        // speed.temp = this;
-        // ispos.temp = this;
-        // damage.temp = this;
-        // attackRange.temp = this;
-        // sightRange.temp = this;
-        // age.temp = this;
-        // birthDay.temp = this;
-    }
 
     #region PlayerStats
     #region Stats
@@ -89,8 +54,6 @@ public class Stats : MonoBehaviour
     #endregion
 
     #endregion
-
-    public virtual void OnStatChanged() { }
 
     void OnDrawGizmosSelected()
     {

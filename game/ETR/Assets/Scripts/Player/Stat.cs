@@ -2,9 +2,9 @@
 [System.Serializable]
 public class Stat
 {
-    [HideInInspector] public Stats temp;
+    [HideInInspector] public Player temp;
     [SerializeField] float maxValue;
-    [SerializeField] public float value;
+    float value;
 
     public float GetMaxValue() => maxValue;
     public void SetMaxValue(float maxValue, bool alreadySet = false)
@@ -15,10 +15,11 @@ public class Stat
     }
 
     public float GetValue() => value;
-    public void SetValue(float value)
+    public void SetValue(float value, bool alreadySet = false)
     {
         this.value = value;
-        temp.OnStatChanged();
+        if (!alreadySet) temp.OnStatChanged();
+
     }
 
 }
