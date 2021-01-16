@@ -2,15 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Stat Coefficients", menuName = "Stat Coefficients")]
+[CreateAssetMenu(fileName = "New Stat Coefficients", menuName = "Coefficients/Stats")]
 public class StatCoefficients : ScriptableObject
 {
-    public float SPEED;
-    public float HEALTH;
-    public float ENERGY;
-    public float DAMAGE;
-    public float ISPOS;
-    public float ATTACK_RANGE;
-    public float SIGHT_RANGE;
-    public float WALKPOINT_RANGE;
+    public float Speed;
+    public float Health;
+    public float Energy;
+    public float Damage;
+    public float Ispos;
+    public float AttackRange;
+    public float SightRange;
+    public float WalkPointRange;
+    public float SizeViaPower;
+    public float StarvingViaPower;
+
 }

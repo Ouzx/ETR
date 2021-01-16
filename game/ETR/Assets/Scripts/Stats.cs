@@ -5,6 +5,8 @@ using UnityEngine;
 public class Stats : MonoBehaviour
 {
     [SerializeField] StatCoefficients stco;
+    [SerializeField] CostCoefficients coco;
+
     new public string name;
     public InteractableTypes InteractableType;
     void Awake()
@@ -12,13 +14,26 @@ public class Stats : MonoBehaviour
         SetStats();
         OnStatChanged();
     }
+    void SetStats()
+    {
+        health.temp = this;
+        energy.temp = this;
+        speed.temp = this;
+        ispos.temp = this;
+        damage.temp = this;
+        attackRange.temp = this;
+        sightRange.temp = this;
+        age.temp = this;
+        birthDay.temp = this;
+    }
+
     #region PlayerStats
     #region Stats
     [Header("Stats")]
     public float power;
     public Stat health;
     public Stat energy;
-    public Stat starvingAmount;
+    public float starvingAmount;
     #endregion
 
     #region  Actions
@@ -26,7 +41,6 @@ public class Stats : MonoBehaviour
     public Stat speed;
     public Stat ispos; // Interaction speed per one second
     public Stat damage;
-    // public float biteAmount;
     #endregion
 
     #region Ranges
@@ -39,15 +53,15 @@ public class Stats : MonoBehaviour
     #region Costs
 
     [Header("Enery Costs")]
-    public Stat starvingCost;
-    public Stat walkingCost;
-    public Stat attackingCost;
+    public float starvingCost;
+    public float walkingCost;
+    public float attackingCost;
 
     [Header("Health Costs")]
-    public Stat tiringCost;
+    public float tiringCost;
 
     [Header("Speed Costs")]
-    public Stat nightCost;
+    public float nightCost;
     #endregion
 
     #region INFO
@@ -61,35 +75,32 @@ public class Stats : MonoBehaviour
     #endregion
 
     #endregion
-    void SetStats()
-    {
-        health.temp = this;
-        energy.temp = this;
-        starvingAmount.temp = this;
-        speed.temp = this;
-        ispos.temp = this;
-        damage.temp = this;
-        attackRange.temp = this;
-        sightRange.temp = this;
-        starvingCost.temp = this;
-        walkingCost.temp = this;
-        attackingCost.temp = this;
-        tiringCost.temp = this;
-        nightCost.temp = this;
-        age.temp = this;
-        birthDay.temp = this;
-    }
 
     public void OnStatChanged()
     {
-        power = speed.GetMaxValue() * stco.SPEED +
-                health.GetMaxValue() * stco.HEALTH +
-                energy.GetMaxValue() * stco.ENERGY +
-                damage.GetMaxValue() * stco.DAMAGE +
-                ispos.GetMaxValue() * stco.ISPOS +
-                attackRange.GetMaxValue() * stco.ATTACK_RANGE +
-                sightRange.GetMaxValue() * stco.SIGHT_RANGE;
-        walkPointRange = sightRange.GetMaxValue() * stco.WALKPOINT_RANGE;
+        Invoke(nameof(UpdateStats), .1f);
+    }
+    public void UpdateStats()
+    {
+        power = speed.GetMaxValue() * stco.Speed +
+                       health.GetMaxValue() * stco.Health +
+                       energy.GetMaxValue() * stco.Energy +
+                       damage.GetMaxValue() * stco.Damage +
+                       ispos.GetMaxValue() * stco.Ispos +
+                       attackRange.GetMaxValue() * stco.AttackRange +
+                       sightRange.GetMaxValue() * stco.SightRange;
+
+        // STATS
+        starvingAmount = power * stco.StarvingViaPower;
+        walkPointRange = sightRange.GetMaxValue() * stco.WalkPointRange;
+        transform.localScale = Vector3.one * Mathf.Sqrt(power * stco.SizeViaPower);
+
+        // COSTS
+        starvingCost = power * coco.Starving;
+        walkingCost = power * coco.Walking;
+        attackingCost = power * coco.Attacking;
+        tiringCost = power * coco.Tiring;
+        nightCost = power * coco.Night;
     }
     void OnDrawGizmosSelected()
     {

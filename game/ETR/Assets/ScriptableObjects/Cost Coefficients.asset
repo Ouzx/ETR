@@ -9,16 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e10e8a7b50c63f488950e383e5460ae, type: 3}
-  m_Name: Stat Coefficients
+  m_Script: {fileID: 11500000, guid: 52759e0f958c40d4a8cd546c3cdc6929, type: 3}
+  m_Name: Cost Coefficients
   m_EditorClassIdentifier: 
-  Speed: 1
-  Health: 0.7
-  Energy: 0.4
-  Damage: 5
-  Ispos: 10
-  AttackRange: 2
-  SightRange: 1
-  WalkPointRange: 0.8
-  SizeViaPower: 0.002
-  StarvingViaPower: 0.3
+  Starving: -0.02
+  Walking: -0.01
+  Attacking: -0.03
+  Tiring: -0.01
+  Night: -3

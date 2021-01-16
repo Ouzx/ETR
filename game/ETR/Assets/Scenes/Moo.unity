@@ -1046,7 +1046,7 @@ Transform:
   m_GameObject: {fileID: 2065296814}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 9.4, y: 7.536511, z: -2.4}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.6324555, y: 0.6324555, z: 0.6324555}
   m_Children:
   - {fileID: 1298370426}
   m_Father: {fileID: 348009561}
@@ -1848,9 +1848,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stco: {fileID: 11400000, guid: bb952597a386f39439a8d972432f356c, type: 2}
+  coco: {fileID: 11400000, guid: d9a292c622e98bf439bf8f553fb7b1cc, type: 2}
   name: Player
   InteractableType: 0
-  power: 110
+  power: 200
   health:
     temp: {fileID: 7219099714933761924}
     maxValue: 100
@@ -1859,10 +1860,7 @@ MonoBehaviour:
     temp: {fileID: 7219099714933761924}
     maxValue: 100
     value: 100
-  starvingAmount:
-    temp: {fileID: 7219099714933761924}
-    maxValue: 1
-    value: 1
+  starvingAmount: 1
   speed:
     temp: {fileID: 7219099714933761924}
     maxValue: 10
@@ -1884,26 +1882,11 @@ MonoBehaviour:
     temp: {fileID: 7219099714933761924}
     maxValue: 10
     value: 10
-  starvingCost:
-    temp: {fileID: 7219099714933761924}
-    maxValue: 1
-    value: 1
-  walkingCost:
-    temp: {fileID: 7219099714933761924}
-    maxValue: 1
-    value: 1
-  attackingCost:
-    temp: {fileID: 7219099714933761924}
-    maxValue: 1
-    value: 1
-  tiringCost:
-    temp: {fileID: 7219099714933761924}
-    maxValue: 1
-    value: 1
-  nightCost:
-    temp: {fileID: 7219099714933761924}
-    maxValue: 1
-    value: 1
+  starvingCost: 0
+  walkingCost: 0
+  attackingCost: 0
+  tiringCost: 0
+  nightCost: 0
   childCount: 0
   gen: 0
   killCount: 0
