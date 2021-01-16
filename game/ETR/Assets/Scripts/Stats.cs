@@ -1,21 +1,23 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 
 [ExecuteInEditMode]
 public class Stats : MonoBehaviour
 {
-    private void Awake()
-    {
-        walkPointRange = sightRange.GetMaxValue() * .8f;
-    }
+    [SerializeField] StatCoefficients stco;
     new public string name;
     public InteractableTypes InteractableType;
+    void Awake()
+    {
+        SetStats();
+        OnStatChanged();
+    }
+    #region PlayerStats
     #region Stats
     [Header("Stats")]
+    public float power;
     public Stat health;
     public Stat energy;
-    public float power;
     public Stat starvingAmount;
     #endregion
 
@@ -29,9 +31,9 @@ public class Stats : MonoBehaviour
 
     #region Ranges
     [Header("Ranges")]
+    public float walkPointRange;
     public Stat attackRange;
     public Stat sightRange;
-    public float walkPointRange;
     #endregion
 
     #region Costs
@@ -39,13 +41,13 @@ public class Stats : MonoBehaviour
     [Header("Enery Costs")]
     public Stat starvingCost;
     public Stat walkingCost;
-    public Stat AttackingCost;
+    public Stat attackingCost;
 
     [Header("Health Costs")]
-    public Stat TiringCost;
+    public Stat tiringCost;
 
     [Header("Speed Costs")]
-    public Stat NightCost;
+    public Stat nightCost;
     #endregion
 
     #region INFO
@@ -58,6 +60,37 @@ public class Stats : MonoBehaviour
     public Stat birthDay;
     #endregion
 
+    #endregion
+    void SetStats()
+    {
+        health.temp = this;
+        energy.temp = this;
+        starvingAmount.temp = this;
+        speed.temp = this;
+        ispos.temp = this;
+        damage.temp = this;
+        attackRange.temp = this;
+        sightRange.temp = this;
+        starvingCost.temp = this;
+        walkingCost.temp = this;
+        attackingCost.temp = this;
+        tiringCost.temp = this;
+        nightCost.temp = this;
+        age.temp = this;
+        birthDay.temp = this;
+    }
+
+    public void OnStatChanged()
+    {
+        power = speed.GetMaxValue() * stco.SPEED +
+                health.GetMaxValue() * stco.HEALTH +
+                energy.GetMaxValue() * stco.ENERGY +
+                damage.GetMaxValue() * stco.DAMAGE +
+                ispos.GetMaxValue() * stco.ISPOS +
+                attackRange.GetMaxValue() * stco.ATTACK_RANGE +
+                sightRange.GetMaxValue() * stco.SIGHT_RANGE;
+        walkPointRange = sightRange.GetMaxValue() * stco.WALKPOINT_RANGE;
+    }
     void OnDrawGizmosSelected()
     {
         UnityEditor.Handles.color = Color.blue;

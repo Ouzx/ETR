@@ -1847,55 +1847,71 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 901907d48ce4480478365f1c1240007c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stco: {fileID: 11400000, guid: bb952597a386f39439a8d972432f356c, type: 2}
   name: Player
   InteractableType: 0
+  power: 110
   health:
+    temp: {fileID: 7219099714933761924}
     maxValue: 100
     value: 100
   energy:
+    temp: {fileID: 7219099714933761924}
     maxValue: 100
     value: 100
-  power: 0
   starvingAmount:
+    temp: {fileID: 7219099714933761924}
     maxValue: 1
     value: 1
   speed:
+    temp: {fileID: 7219099714933761924}
     maxValue: 10
     value: 10
   ispos:
+    temp: {fileID: 7219099714933761924}
     maxValue: 1
     value: 1
   damage:
-    maxValue: 10
-    value: 10
-  attackRange:
-    maxValue: 5
-    value: 5
-  sightRange:
+    temp: {fileID: 7219099714933761924}
     maxValue: 10
     value: 10
   walkPointRange: 8
+  attackRange:
+    temp: {fileID: 7219099714933761924}
+    maxValue: 5
+    value: 5
+  sightRange:
+    temp: {fileID: 7219099714933761924}
+    maxValue: 10
+    value: 10
   starvingCost:
-    maxValue: 0
-    value: 0
+    temp: {fileID: 7219099714933761924}
+    maxValue: 1
+    value: 1
   walkingCost:
-    maxValue: 0
-    value: 0
-  AttackingCost:
-    maxValue: 0
-    value: 0
-  TiringCost:
-    maxValue: 0
-    value: 0
-  NightCost:
-    maxValue: 0
-    value: 0
+    temp: {fileID: 7219099714933761924}
+    maxValue: 1
+    value: 1
+  attackingCost:
+    temp: {fileID: 7219099714933761924}
+    maxValue: 1
+    value: 1
+  tiringCost:
+    temp: {fileID: 7219099714933761924}
+    maxValue: 1
+    value: 1
+  nightCost:
+    temp: {fileID: 7219099714933761924}
+    maxValue: 1
+    value: 1
   childCount: 0
   gen: 0
   killCount: 0
   age:
+    temp: {fileID: 7219099714933761924}
     maxValue: 0
     value: 0
   birthDay:
+    temp: {fileID: 7219099714933761924}
     maxValue: 0
     value: 0
