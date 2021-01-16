@@ -18,9 +18,10 @@ public class Interactable : MonoBehaviour
     Interactable target;
     void Awake()
     {
-        stats = GetComponent<PlayerController>().stats;
-        if (stats != null)
+        PlayerController pc = GetComponent<PlayerController>();
+        if (pc != null)
         {
+            stats = GetComponent<PlayerController>().stats;
             interactableType = stats.InteractableType;
         }
         else interactableType = InteractableTypes.Food;

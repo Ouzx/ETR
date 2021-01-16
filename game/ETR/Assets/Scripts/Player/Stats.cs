@@ -4,9 +4,6 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class Stats : MonoBehaviour
 {
-    [SerializeField] StatCoefficients stco;
-    [SerializeField] CostCoefficients coco;
-
     new public string name;
     public InteractableTypes InteractableType;
     void Awake()
@@ -14,6 +11,8 @@ public class Stats : MonoBehaviour
         SetStats();
         OnStatChanged();
     }
+
+
     void SetStats()
     {
         health.temp = this;
@@ -76,35 +75,8 @@ public class Stats : MonoBehaviour
 
     #endregion
 
-    public void OnStatChanged()
-    {
-        Invoke(nameof(UpdateStats), .1f);
-    }
-    public void UpdateStats()
-    {
-        power = speed.GetMaxValue() * stco.Speed +
-                       health.GetMaxValue() * stco.Health +
-                       energy.GetMaxValue() * stco.Energy +
-                       damage.GetMaxValue() * stco.Damage +
-                       ispos.GetMaxValue() * stco.Ispos +
-                       attackRange.GetMaxValue() * stco.AttackRange +
-                       sightRange.GetMaxValue() * stco.SightRange;
+    public virtual void OnStatChanged() { }
 
-        // STATS
-        starvingAmount = power * stco.StarvingViaPower;
-        walkPointRange = sightRange.GetMaxValue() * stco.WalkPointRange;
-        transform.localScale = Vector3.one * Mathf.Sqrt(power * stco.SizeViaPower);
-
-        // COSTS
-        starvingCost = power * coco.Starving;
-        walkingCost = power * coco.Walking;
-        attackingCost = power * coco.Attacking;
-        tiringCost = power * coco.Tiring;
-        nightCost = power * coco.Night;
-
-        // Player Effects
-        GetComponent<PlayerMotor>().SetSpeed(speed.GetValue());
-    }
     void OnDrawGizmosSelected()
     {
         UnityEditor.Handles.color = Color.blue;
