@@ -4,13 +4,13 @@ public class Stat
 {
     [HideInInspector] public Stats temp;
     [SerializeField] float maxValue;
-    [SerializeField] float value;
+    [SerializeField] public float value;
 
     public float GetMaxValue() => maxValue;
-    public void SetMaxValue(float maxValue)
+    public void SetMaxValue(float maxValue, bool alreadySet = false)
     {
         this.maxValue = maxValue;
-        temp.OnStatChanged();
+        if (!alreadySet) temp.OnStatChanged();
 
     }
 

@@ -13,7 +13,7 @@ public class Interactable : MonoBehaviour
      */
 
     [HideInInspector] public InteractableTypes interactableType;
-    Stats stats;
+    Player player;
     bool isFocused = false;
     Interactable target;
     void Awake()
@@ -21,8 +21,8 @@ public class Interactable : MonoBehaviour
         PlayerController pc = GetComponent<PlayerController>();
         if (pc != null)
         {
-            stats = GetComponent<PlayerController>().stats;
-            interactableType = stats.InteractableType;
+            player = GetComponent<PlayerController>().player;
+            interactableType = player.InteractableType;
         }
         else interactableType = InteractableTypes.Food;
     }
@@ -31,7 +31,7 @@ public class Interactable : MonoBehaviour
         if (isFocused && target != null)
         {
             float distance = Vector3.Distance(target.transform.position, transform.position);
-            if (distance <= stats.attackRange.GetMaxValue())
+            if (distance <= player.attackRange.GetMaxValue())
             {
                 // Triggering INTERACTIONS can be INVOKE
                 if (target.interactableType == InteractableTypes.Food)
@@ -39,7 +39,7 @@ public class Interactable : MonoBehaviour
                     //Eat
                     Debug.Log(target.GetComponent<Food>().Eat(5));
                 }
-                else if (target.interactableType != stats.InteractableType)
+                else if (target.interactableType != player.InteractableType)
                 {
                     // Engage 
                 }

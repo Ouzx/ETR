@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
+[ExecuteAlways]
 public class Clock : MonoBehaviour
 {
     #region Singleton
@@ -11,20 +12,24 @@ public class Clock : MonoBehaviour
     }
     #endregion
 
-    #region ClockParameters
-    public float dayTime = 0;
-    public int day = 0;
-    [Range(0, 24)] public float timeStep;
-    #endregion
-
     #region Events
     public event Action OnMorning;
     public event Action OnEvening;
     #endregion
 
+    #region ClockParameters
+    [Range(0, 24)]
+    public float dayTime = 0;
+    public int day = 0;
+    [Range(0, 1f)]
+    public float timeStep;
+    #endregion
+
+
     void FixedUpdate()
     {
-        dayTime += timeStep;
+        float pointFloater = 100f;
+        dayTime = Mathf.Round((dayTime + timeStep) * pointFloater) / pointFloater;
         if (dayTime == 6) OnMorning?.Invoke();
         else if (dayTime == 18) OnEvening?.Invoke();
         else if (dayTime > 24)

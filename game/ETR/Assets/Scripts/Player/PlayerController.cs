@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerMotor))]
 public class PlayerController : MonoBehaviour
 {
-    public Stats stats;
+    public Player player;
     public Interactable focus;
     Interactable me;
 
@@ -26,8 +26,8 @@ public class PlayerController : MonoBehaviour
     {
         while (true)
         {
-            Collider[] enemies = Physics.OverlapSphere(transform.position, stats.sightRange.GetMaxValue(), motor.PlayerLayer, QueryTriggerInteraction.Ignore);
-            Collider[] foods = Physics.OverlapSphere(transform.position, stats.sightRange.GetMaxValue(), motor.FoodLayer, QueryTriggerInteraction.Ignore);
+            Collider[] enemies = Physics.OverlapSphere(transform.position, player.sightRange.GetMaxValue(), motor.PlayerLayer, QueryTriggerInteraction.Ignore);
+            Collider[] foods = Physics.OverlapSphere(transform.position, player.sightRange.GetMaxValue(), motor.FoodLayer, QueryTriggerInteraction.Ignore);
             if (enemies.Length == 0) { nearestEnemy = null; _nearestEnemy = null; }
             else
             {

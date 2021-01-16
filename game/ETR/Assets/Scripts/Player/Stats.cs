@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using UnityEngine;
 
 [ExecuteInEditMode]
@@ -10,20 +11,33 @@ public class Stats : MonoBehaviour
     {
         SetStats();
         OnStatChanged();
-    }
 
+    }
 
     void SetStats()
     {
-        health.temp = this;
-        energy.temp = this;
-        speed.temp = this;
-        ispos.temp = this;
-        damage.temp = this;
-        attackRange.temp = this;
-        sightRange.temp = this;
-        age.temp = this;
-        birthDay.temp = this;
+        // This method, iterates over all Stat fields of this instance.
+        // and point this class to stats.temp class
+        FieldInfo[] fields = typeof(Stats).GetFields();
+        foreach (FieldInfo _field in fields)
+        {
+            if (_field.FieldType == typeof(Stat))
+            {
+                FieldInfo field = typeof(Stat).GetField("temp");
+                Stats temp = (Stats)field.GetValue(_field.GetValue(this));
+                temp = this;
+            }
+        }
+
+        // health.temp = this;
+        // energy.temp = this;
+        // speed.temp = this;
+        // ispos.temp = this;
+        // damage.temp = this;
+        // attackRange.temp = this;
+        // sightRange.temp = this;
+        // age.temp = this;
+        // birthDay.temp = this;
     }
 
     #region PlayerStats
@@ -32,7 +46,8 @@ public class Stats : MonoBehaviour
     public float power;
     public Stat health;
     public Stat energy;
-    public float starvingAmount;
+    public Stat starvingAmount;
+    public bool isHungry;
     #endregion
 
     #region  Actions

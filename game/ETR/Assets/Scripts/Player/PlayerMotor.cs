@@ -14,7 +14,7 @@ public class PlayerMotor : MonoBehaviour
      * - LookTarget: Rotation Speed: 50f 
     */
     public LayerMask GroundLayer, PlayerLayer, FoodLayer;
-    Stats stats;
+    Player player;
 
     // Patrolling
     [SerializeField] Vector3 walkPoint;
@@ -27,7 +27,7 @@ public class PlayerMotor : MonoBehaviour
     }
     void Start()
     {
-        stats = GetComponent<PlayerController>().stats;
+        player = GetComponent<PlayerController>().player;
         StartCoroutine(nameof(TargetChecker));
     }
     IEnumerator TargetChecker()
@@ -51,7 +51,7 @@ public class PlayerMotor : MonoBehaviour
 
     public void FollowTarget(Interactable newTarget)
     {
-        agent.stoppingDistance = stats.attackRange.GetMaxValue();
+        agent.stoppingDistance = player.attackRange.GetMaxValue();
         agent.updateRotation = false;
         target = newTarget.transform;
     }
@@ -87,7 +87,7 @@ public class PlayerMotor : MonoBehaviour
     }
     void SearchWalkPoint()
     {
-        float walkPointRange = stats.walkPointRange;
+        float walkPointRange = player.walkPointRange;
         float randomZ = Random.Range(-walkPointRange, walkPointRange);
         float randomX = Random.Range(-walkPointRange, walkPointRange);
 
