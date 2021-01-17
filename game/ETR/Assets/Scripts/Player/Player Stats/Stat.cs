@@ -14,6 +14,8 @@ public class Stat
 
     }
 
+    public void Equalize() => value = maxValue;
+
     public float GetValue() => value;
     public void SetValue(float value)
     {

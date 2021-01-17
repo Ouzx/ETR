@@ -64,9 +64,9 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            RemoveFocus();
             if (!motor.isAtBase())
                 motor.GoBase();
+            RemoveFocus();
         }
     }
     void SetFocus(Interactable newFocus)
