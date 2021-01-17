@@ -5,6 +5,7 @@ public class Player : Stats
 {
     [SerializeField] StatCoefficients stco;
     [SerializeField] CostCoefficients coco;
+    Animator animator;
 
     void Awake()
     {
@@ -13,7 +14,9 @@ public class Player : Stats
         Clock.instance.OnMorning += OnMorning;
         Clock.instance.OnEvening += OnEvening;
         Clock.instance.OnSecond += OnSecondChanged;
+        animator = GetComponent<Animator>();
     }
+
     void OnDestroy()
     {
         Clock.instance.OnMorning -= OnMorning;
@@ -117,6 +120,7 @@ public class Player : Stats
         else
         {
             isHungry = false;
+            animator.SetBool("isHungry", false);
             starvingAmount.SetValue(0);
             energy.SetValue(energy.GetValue() + tempAmount);
         }
@@ -134,6 +138,7 @@ public class Player : Stats
     {
         if (nerf) DeBuff(false);
         isHungry = true;
+        animator.SetBool("isHungry", true);
         starvingAmount.Equalize();
     }
     void OnEvening()

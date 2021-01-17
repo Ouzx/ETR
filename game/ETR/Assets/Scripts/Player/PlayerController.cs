@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerMotor))]
 public class PlayerController : MonoBehaviour
 {
+    public Animator animator;
     public Player player;
     public Interactable focus;
     Interactable me;
@@ -13,7 +14,7 @@ public class PlayerController : MonoBehaviour
 
     // Collisions
     public Transform nearestFood, nearestEnemy;
-    Transform _nearestFood, _nearestEnemy;
+    [HideInInspector] public Transform _nearestFood, _nearestEnemy;
 
     void Start()
     {
@@ -55,19 +56,20 @@ public class PlayerController : MonoBehaviour
     }
     void Update()
     {
+        if (nearestFood != null) animator.SetBool("isFoodVisible", false);
         // If player at base but can see Enemy attack!
-        if (nearestEnemy != null) { SetFocus(nearestEnemy.GetComponent<Interactable>()); } // Attack or Escape
-        else if (player.isHungry)
-        {
-            if (nearestFood != null) { SetFocus(nearestFood.GetComponent<Interactable>()); } // Eat
-            else { RemoveFocus(); motor.Patrol(); } // Patrol
-        }
-        else
-        {
-            if (!motor.isAtBase())
-                motor.GoBase();
-            RemoveFocus();
-        }
+        // // if (nearestEnemy != null) { SetFocus(nearestEnemy.GetComponent<Interactable>()); } // Attack or Escape
+        // if (player.isHungry)
+        // {
+        //     if (nearestFood != null) { SetFocus(nearestFood.GetComponent<Interactable>()); } // Eat
+        //     else { RemoveFocus(); motor.Patrol(); } // Patrol
+        // }
+        // else
+        // {
+        //     if (!motor.isAtBase())
+        //         motor.GoBase();
+        //     RemoveFocus();
+        // }
     }
     void SetFocus(Interactable newFocus)
     {
