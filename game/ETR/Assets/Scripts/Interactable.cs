@@ -28,24 +28,35 @@ public class Interactable : MonoBehaviour
     }
     void Update()
     {
+        // Triggering INTERACTIONS can be INVOKE
         if (isFocused && target != null)
         {
             float distance = Vector3.Distance(target.transform.position, transform.position);
             if (distance <= player.attackRange.GetMaxValue())
             {
-                // Triggering INTERACTIONS can be INVOKE
                 if (target.interactableType == InteractableTypes.Food)
                 {
-                    //Eat
-                    Debug.Log(target.GetComponent<Food>().Eat(5));
+                    Eat();
                 }
                 else if (target.interactableType != player.InteractableType)
                 {
-                    // Engage 
+                    // Attack()
                 }
             }
         }
     }
+    #region Interaction
+    void Eat()
+    {
+        player.Eat(target.GetComponent<Food>().Eat(player.damage.GetValue()));
+    }
+    void Attack()
+    {
+        // player.Attack(); -> target.GetDamage();
+    }
+    #endregion
+
+    #region Focus
     public void OnFocused(Interactable newTarget)
     {
         isFocused = true;
@@ -56,4 +67,5 @@ public class Interactable : MonoBehaviour
         isFocused = false;
         target = null;
     }
+    #endregion
 }

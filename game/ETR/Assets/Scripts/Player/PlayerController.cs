@@ -57,8 +57,15 @@ public class PlayerController : MonoBehaviour
     {
         // TODO: ENEMY CASES: FIGHT OR RUN AND EATING
         if (nearestEnemy != null) { SetFocus(nearestEnemy.GetComponent<Interactable>()); } // Attack or Escape
-        else if (nearestFood != null) { SetFocus(nearestFood.GetComponent<Interactable>()); } // Eat
-        else if (nearestFood == null) { RemoveFocus(); motor.Patrol(); } // Patrol
+        else if (player.isHungry)
+        {
+            if (nearestFood != null) { SetFocus(nearestFood.GetComponent<Interactable>()); } // Eat
+            else { RemoveFocus(); motor.Patrol(); } // Patrol
+        }
+        else
+        {
+            RemoveFocus();
+        }
     }
     void SetFocus(Interactable newFocus)
     {

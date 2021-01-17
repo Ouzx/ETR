@@ -30,11 +30,7 @@ public class PlayerMotor : MonoBehaviour
         player = GetComponent<PlayerController>().player;
         StartCoroutine(nameof(TargetChecker));
     }
-    void Walk(Vector3 walkingPoint)
-    {
-        agent.SetDestination(walkingPoint);
-        player.GetTired(player.walkingCost);
-    }
+
     IEnumerator TargetChecker()
     {
         while (true)
@@ -49,6 +45,12 @@ public class PlayerMotor : MonoBehaviour
     }
 
     #region Movement
+    void Walk(Vector3 walkingPoint)
+    {
+        // agent.isStopped = false;
+        agent.SetDestination(walkingPoint);
+        player.GetTired(player.walkingCost);
+    }
     public void MoveToPoint(Vector3 point)
     {
         Walk(point);
@@ -62,7 +64,7 @@ public class PlayerMotor : MonoBehaviour
     }
     public void StopFollowingTarget()
     {
-        agent.stoppingDistance = 0f;
+        // agent.isStopped = true;
         agent.updateRotation = true;
         target = null;
     }

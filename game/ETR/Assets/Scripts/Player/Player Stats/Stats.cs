@@ -37,7 +37,7 @@ public class Stats : MonoBehaviour
     public float attackingCost;
 
     [Header("Health Costs")]
-    public float tiringCost;
+    public float tringCost;
 
     [Header("Speed Costs")]
     public float nightCost;

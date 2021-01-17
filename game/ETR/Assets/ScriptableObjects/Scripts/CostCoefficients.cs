@@ -7,7 +7,7 @@ public class CostCoefficients : ScriptableObject
     public float Starving;
     public float Walking;
     public float Attacking;
-    public float Tiring;
+    public float Tring;
     public float Night;
 
 }

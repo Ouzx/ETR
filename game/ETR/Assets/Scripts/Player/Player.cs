@@ -15,65 +15,7 @@ public class Player : Stats
         Clock.instance.OnSecond += OnSecondChanged;
     }
 
-    void SetStats()
-    {
-        // This method, iterates over all Stat fields of this instance.
-        // and point this class to player.temp class
-        FieldInfo[] fields = typeof(Player).GetFields();
-        foreach (FieldInfo _field in fields)
-        {
-            if (_field.FieldType == typeof(Stat))
-            {
-                FieldInfo field = typeof(Stat).GetField("temp");
-                Player temp = (Player)field.GetValue(_field.GetValue(this));
-                temp = this;
-
-                Stat _stat = (Stat)_field.GetValue(this);
-                _stat.SetValue(_stat.GetMaxValue());
-            }
-        }
-    }
-
-    #region Actions and Costs
-    public void GetDamage(float amount)
-    {
-        float tempAmont = health.GetValue() - amount;
-        if (tempAmont > 0)
-        {
-            health.SetValue(tempAmont);
-        }
-        else
-        {
-            DestroyMe();
-        }
-    }
-
-    public void GetTired(float amount)
-    {
-        float tempAmont = energy.GetValue() - amount;
-        if (tempAmont > 0)
-        {
-            energy.SetValue(tempAmont);
-        }
-        else
-        {
-            GetDamage(tiringCost);
-        }
-    }
-
-    public void Attack()
-    {
-        // Attack from Interactable not here.
-        GetTired(attackingCost);
-    }
-    public void DestroyMe()
-    {
-        Destroy(gameObject);
-    }
-
-    #endregion
-
-    #region OnStatChanged
+    #region Stats and Costs
     public void OnStatChanged()
     {
         Invoke(nameof(UpdateStats), .1f);
@@ -97,12 +39,89 @@ public class Player : Stats
         starvingCost = coco.Starving;
         walkingCost = power * coco.Walking;
         attackingCost = power * coco.Attacking;
-        tiringCost = power * coco.Tiring;
+        tringCost = power * coco.Tring;
         nightCost = coco.Night;
 
         // Player Effects
         GetComponent<PlayerMotor>().SetSpeed(speed.GetValue());
     }
+
+    void SetStats()
+    {
+        // This method, iterates over all Stat fields of this instance.
+        // and point this class to player.temp class
+        FieldInfo[] fields = typeof(Player).GetFields();
+        foreach (FieldInfo _field in fields)
+        {
+            if (_field.FieldType == typeof(Stat))
+            {
+                FieldInfo field = typeof(Stat).GetField("temp");
+                Player temp = (Player)field.GetValue(_field.GetValue(this));
+                temp = this;
+
+                Stat _stat = (Stat)_field.GetValue(this);
+                _stat.SetValue(_stat.GetMaxValue());
+            }
+        }
+    }
+
+    #endregion
+
+    #region Actions
+    public void GetDamage(float amount)
+    {
+        float tempAmount = health.GetValue() + amount;
+        if (tempAmount > 0)
+        {
+            health.SetValue(tempAmount);
+        }
+        else
+        {
+            DestroyMe();
+        }
+    }
+
+    public void GetTired(float amount)
+    {
+        float tempAmount = energy.GetValue() + amount;
+        if (tempAmount > 0)
+        {
+            energy.SetValue(tempAmount);
+        }
+        else
+        {
+            energy.SetValue(0f);
+            GetDamage(tringCost);
+        }
+    }
+
+    public void Attack()
+    {
+        // Attack from Interactable not here.
+        GetTired(attackingCost);
+    }
+
+    public void Eat(float amount)
+    {
+        float tempAmount = starvingAmount.GetValue() - amount;
+        if (tempAmount > 0)
+        {
+            Debug.Log("Eated: " + tempAmount);
+            starvingAmount.SetValue(tempAmount);
+        }
+        else
+        {
+            Debug.Log("I'm full");
+            isHungry = false;
+            starvingAmount.SetValue(0);
+            energy.SetValue(tempAmount);
+        }
+    }
+    public void DestroyMe()
+    {
+        Destroy(gameObject);
+    }
+
     #endregion
 
     #region OnDayChanged
@@ -110,14 +129,13 @@ public class Player : Stats
     void OnMorning()
     {
         if (nerf) DeBuff(false);
-        Debug.LogWarning("Normal speed: " + speed.GetValue());
         isHungry = true;
+        Debug.Log("I'm hungry now.");
     }
     void OnEvening()
     {
         // Debuff player stats
         DeBuff(true);
-        Debug.LogWarning("Speed: " + speed.GetValue());
     }
 
     // Decrease sight range and speed
@@ -135,7 +153,7 @@ public class Player : Stats
     #region OnSecondChanged
     void OnSecondChanged()
     {
-        if (isHungry) GetTired(starvingAmount.GetValue());
+        if (isHungry) GetTired(tringCost);
     }
     #endregion
 
