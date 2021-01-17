@@ -69,7 +69,7 @@ public class Player : Stats
                 temp = this;
 
                 Stat _stat = (Stat)_field.GetValue(this);
-                _stat.Equalize();
+                _stat.SetValue(_stat.GetMaxValue());
             }
         }
     }
@@ -115,14 +115,16 @@ public class Player : Stats
         float tempAmount = starvingAmount.GetValue() - amount;
         if (tempAmount > 0)
         {
+            Debug.Log("Eated: " + tempAmount);
             starvingAmount.SetValue(tempAmount);
         }
         else
         {
+            Debug.Log("I'm full");
             isHungry = false;
             animator.SetBool("isHungry", false);
             starvingAmount.SetValue(0);
-            energy.SetValue(energy.GetValue() + tempAmount);
+            energy.SetValue(tempAmount);
         }
     }
     public void DestroyMe()
@@ -138,8 +140,7 @@ public class Player : Stats
     {
         if (nerf) DeBuff(false);
         isHungry = true;
-        animator.SetBool("isHungry", true);
-        starvingAmount.Equalize();
+        Debug.Log("I'm hungry now.");
     }
     void OnEvening()
     {

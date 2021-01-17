@@ -19,8 +19,7 @@ public class Clock : MonoBehaviour
     public event Action OnSecond;
     void Start()
     {
-        tempTime = dayTime;
-        StartCoroutine(nameof(SecondCounter));
+
     }
     IEnumerator SecondCounter()
     {
@@ -33,24 +32,23 @@ public class Clock : MonoBehaviour
     #endregion
 
     #region ClockParameters
+    [Range(0, 24)]
+    public float dayTime = 0;
     public int day = 0;
-    float tempTime;
-    [Range(0, 24)] public float dayTime;
-
-    [Range(0, 1f)] public float timeStep;
+    [Range(0, 1f)]
+    public float timeStep;
     #endregion
 
-    bool[] timeKeys = { true, true };
+
     void FixedUpdate()
     {
-        tempTime += timeStep;
-        dayTime = Mathf.Round(tempTime);
-        if (dayTime == 6 && timeKeys[0]) { OnMorning?.Invoke(); timeKeys[0] = false; }
-        else if (dayTime == 18 && timeKeys[1]) { OnEvening?.Invoke(); timeKeys[1] = false; }
+        float pointFloater = 100f;
+        dayTime = Mathf.Round((dayTime + timeStep) * pointFloater) / pointFloater;
+        if (dayTime == 6) OnMorning?.Invoke();
+        else if (dayTime == 18) OnEvening?.Invoke();
         else if (dayTime > 24)
         {
-            timeKeys[0] = true; timeKeys[1] = true;
-            tempTime = 0;
+            dayTime = 0;
             day++;
         }
     }

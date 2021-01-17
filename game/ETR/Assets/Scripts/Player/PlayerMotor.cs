@@ -12,7 +12,6 @@ public class PlayerMotor : MonoBehaviour
      * - Patrol distance checker: 1f
      * - WalkPoint searcher distance checker: 2f
      * - LookTarget: Rotation Speed: 50f 
-     * - Step delay: Time.deltaTime * 2
     */
     public LayerMask GroundLayer, BaseLayer, PlayerLayer, FoodLayer;
     Player player;
@@ -29,30 +28,15 @@ public class PlayerMotor : MonoBehaviour
 
     [SerializeField] NavMeshAgent agent;
     Transform target;
+    void Awake()
+    {
+    }
     void Start()
     {
         player = GetComponent<PlayerController>().player;
         StartCoroutine(nameof(TargetChecker));
-        StartCoroutine(nameof(Stepper));
     }
 
-    Vector3 oldPos;
-    int stepCount;
-    IEnumerator Stepper()
-    {
-        oldPos = transform.position;
-        while (true)
-        {
-            if (!isAtBase())
-                if (Vector3.Distance(oldPos, transform.position) > 1)
-                {
-                    stepCount++;
-                    oldPos = transform.position;
-                    player.GetTired(player.walkingCost);
-                }
-            yield return new WaitForSeconds(Time.deltaTime * 1.5f);
-        }
-    }
     IEnumerator TargetChecker()
     {
         while (true)
@@ -71,6 +55,7 @@ public class PlayerMotor : MonoBehaviour
     {
         // agent.isStopped = false;
         agent.SetDestination(walkingPoint);
+        player.GetTired(player.walkingCost);
     }
     public void MoveToPoint(Vector3 point)
     {
@@ -86,7 +71,7 @@ public class PlayerMotor : MonoBehaviour
     public void StopFollowingTarget()
     {
         // agent.isStopped = true;
-        // agent.updateRotation = true;
+        agent.updateRotation = true;
         target = null;
     }
     void LookTarget()
