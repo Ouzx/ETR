@@ -58,18 +58,18 @@ public class PlayerController : MonoBehaviour
     {
         if (nearestFood != null) animator.SetBool("isFoodVisible", false);
         // If player at base but can see Enemy attack!
-        if (nearestEnemy != null) { SetFocus(nearestEnemy.GetComponent<Interactable>()); } // Attack or Escape
-        else if (player.isHungry)
-        {
-            if (nearestFood != null) { SetFocus(nearestFood.GetComponent<Interactable>()); } // Eat
-            else { RemoveFocus(); motor.Patrol(); } // Patrol
-        }
-        else
-        {
-            RemoveFocus();
-            if (!motor.isAtBase())
-                motor.GoBase();
-        }
+        // // if (nearestEnemy != null) { SetFocus(nearestEnemy.GetComponent<Interactable>()); } // Attack or Escape
+        // if (player.isHungry)
+        // {
+        //     if (nearestFood != null) { SetFocus(nearestFood.GetComponent<Interactable>()); } // Eat
+        //     else { RemoveFocus(); motor.Patrol(); } // Patrol
+        // }
+        // else
+        // {
+        //     if (!motor.isAtBase())
+        //         motor.GoBase();
+        //     RemoveFocus();
+        // }
     }
     void SetFocus(Interactable newFocus)
     {
