@@ -1000,7 +1000,6 @@ GameObject:
   - component: {fileID: 2065296820}
   - component: {fileID: 2065296819}
   - component: {fileID: 2065296818}
-  - component: {fileID: 2065296823}
   - component: {fileID: 2065296822}
   - component: {fileID: 2065296817}
   - component: {fileID: 2065296816}
@@ -1037,13 +1036,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e294762a124247438cfc56b1f13b632, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 2065296823}
   player: {fileID: 2065296822}
   focus: {fileID: 0}
   nearestFood: {fileID: 0}
   nearestEnemy: {fileID: 0}
   _nearestFood: {fileID: 0}
   _nearestEnemy: {fileID: 0}
+  isAtBase: 0
 --- !u!114 &2065296817
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1135,7 +1134,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2065296814}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 9.4, y: 7.536511, z: -31.31}
+  m_LocalPosition: {x: 9.4, y: 7.536511, z: -12.97}
   m_LocalScale: {x: 0.621289, y: 0.621289, z: 0.621289}
   m_Children:
   - {fileID: 1298370426}
@@ -1199,25 +1198,6 @@ MonoBehaviour:
     maxValue: 0
   stco: {fileID: 11400000, guid: bb952597a386f39439a8d972432f356c, type: 2}
   coco: {fileID: 11400000, guid: d9a292c622e98bf439bf8f553fb7b1cc, type: 2}
---- !u!95 &2065296823
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2065296814}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: fc4a49ab2ff841246b340db569ff485d, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &1444979002677092573
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1279,7 +1259,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1444979003275187795, guid: f2e7676150ca48c48bba202444d18421, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f2e7676150ca48c48bba202444d18421, type: 3}

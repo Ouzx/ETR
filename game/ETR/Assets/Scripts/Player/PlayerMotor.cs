@@ -59,7 +59,7 @@ public class PlayerMotor : MonoBehaviour
         {
             if (target != null)
             {
-                Walk(target.position);
+                MoveToPoint(target.position);
                 LookTarget();
             }
             yield return new WaitForSeconds(0.1f); // you can change it if player acts laggy
@@ -67,24 +67,20 @@ public class PlayerMotor : MonoBehaviour
     }
 
     #region Movement
-    void Walk(Vector3 walkingPoint)
-    {
-        // agent.isStopped = false;
-        agent.SetDestination(walkingPoint);
-    }
     public void MoveToPoint(Vector3 point)
     {
-        Walk(point);
+        agent.SetDestination(point);
     }
 
     public void FollowTarget(Interactable newTarget)
     {
-        agent.stoppingDistance = player.attackRange.GetMaxValue();
+        agent.stoppingDistance = player.attackRange.GetMaxValue() * 0.8f;
         agent.updateRotation = false;
         target = newTarget.transform;
     }
     public void StopFollowingTarget()
     {
+        // agent.stoppingDistance = 0;
         // agent.isStopped = true;
         // agent.updateRotation = true;
         target = null;
@@ -105,6 +101,7 @@ public class PlayerMotor : MonoBehaviour
     #region  Patrolling
     public void Patrol()
     {
+        agent.stoppingDistance = 0;
         if (!isWalkPointSet) SearchWalkPoint();
         if (isWalkPointSet)
         {
@@ -135,6 +132,10 @@ public class PlayerMotor : MonoBehaviour
             agent.stoppingDistance = 0f;
             MoveToPoint(baseWalkPoint);
         }
+    }
+    public void ToBase()
+    {
+        MoveToPoint(GameObject.FindGameObjectWithTag("FredBase").transform.position);
     }
     void SearchBasePoint()
     {
