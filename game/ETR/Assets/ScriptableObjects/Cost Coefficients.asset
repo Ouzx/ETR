@@ -15,5 +15,5 @@ MonoBehaviour:
   Starving: -0.02
   Walking: -0.01
   Attacking: -0.03
-  Tiring: -0.01
+  Tring: -0.005
   Night: -3

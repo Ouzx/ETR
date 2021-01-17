@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
     }
     void Update()
     {
-        // TODO: ENEMY CASES: FIGHT OR RUN AND EATING
+        // If player at base but can see Enemy attack!
         if (nearestEnemy != null) { SetFocus(nearestEnemy.GetComponent<Interactable>()); } // Attack or Escape
         else if (player.isHungry)
         {
@@ -65,6 +65,8 @@ public class PlayerController : MonoBehaviour
         else
         {
             RemoveFocus();
+            if (!motor.isAtBase())
+                motor.GoBase();
         }
     }
     void SetFocus(Interactable newFocus)

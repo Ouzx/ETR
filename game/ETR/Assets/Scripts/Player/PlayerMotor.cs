@@ -13,12 +13,18 @@ public class PlayerMotor : MonoBehaviour
      * - WalkPoint searcher distance checker: 2f
      * - LookTarget: Rotation Speed: 50f 
     */
-    public LayerMask GroundLayer, PlayerLayer, FoodLayer;
+    public LayerMask GroundLayer, BaseLayer, PlayerLayer, FoodLayer;
     Player player;
 
     // Patrolling
     [SerializeField] Vector3 walkPoint;
     [SerializeField] bool isWalkPointSet;
+
+    // Base
+    [SerializeField] Transform PlayerBase;
+    [SerializeField] float baseRandomRange;
+    [SerializeField] Vector3 baseWalkPoint;
+    [SerializeField] bool isBaseWalkPointSet;
 
     [SerializeField] NavMeshAgent agent;
     Transform target;
@@ -105,4 +111,33 @@ public class PlayerMotor : MonoBehaviour
     }
     #endregion
 
+    #region Base
+    public void GoBase()
+    {
+        if (!isBaseWalkPointSet) SearchBasePoint();
+        if (isBaseWalkPointSet)
+        {
+            agent.stoppingDistance = 0f;
+            MoveToPoint(baseWalkPoint);
+        }
+    }
+    void SearchBasePoint()
+    {
+        float walkPointRange = baseRandomRange;
+        float randomZ = Random.Range(-walkPointRange, walkPointRange);
+        float randomX = Random.Range(-walkPointRange, walkPointRange);
+
+        baseWalkPoint = new Vector3(PlayerBase.position.x + randomX, transform.position.y, PlayerBase.position.z + randomZ);
+
+        if (Physics.Raycast(baseWalkPoint, -transform.up, 2f, BaseLayer))
+            isBaseWalkPointSet = true;
+    }
+    public bool isAtBase() => Physics.Raycast(transform.position, -transform.up, 2f, BaseLayer);
+    #endregion
+
+    void OnDrawGizmosSelected()
+    {
+        UnityEditor.Handles.color = Color.magenta;
+        UnityEditor.Handles.DrawWireDisc(transform.position, transform.up, baseRandomRange);
+    }
 }
