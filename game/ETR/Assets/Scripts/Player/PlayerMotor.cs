@@ -61,6 +61,7 @@ public class PlayerMotor : MonoBehaviour
             {
                 MoveToPoint(target.position);
                 LookTarget();
+                // transform.LookAt(target);
             }
             yield return new WaitForSeconds(0.1f); // you can change it if player acts laggy
         }
@@ -80,9 +81,10 @@ public class PlayerMotor : MonoBehaviour
     }
     public void StopFollowingTarget()
     {
-        // agent.stoppingDistance = 0;
+
+        agent.stoppingDistance = 0;
         // agent.isStopped = true;
-        // agent.updateRotation = true;
+        agent.updateRotation = true;
         target = null;
     }
     void LookTarget()
@@ -101,7 +103,6 @@ public class PlayerMotor : MonoBehaviour
     #region  Patrolling
     public void Patrol()
     {
-        agent.stoppingDistance = 0;
         if (!isWalkPointSet) SearchWalkPoint();
         if (isWalkPointSet)
         {
@@ -129,9 +130,10 @@ public class PlayerMotor : MonoBehaviour
         if (!isBaseWalkPointSet) SearchBasePoint();
         if (isBaseWalkPointSet)
         {
-            agent.stoppingDistance = 0f;
             MoveToPoint(baseWalkPoint);
         }
+        Vector3 distanceToWalkPoint = transform.position - baseWalkPoint;
+        if (distanceToWalkPoint.magnitude < 1f) isBaseWalkPointSet = false;
     }
     public void ToBase()
     {

@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : Stats
 {
@@ -14,7 +15,19 @@ public class Player : Stats
         Clock.instance.OnEvening += OnEvening;
         Clock.instance.OnSecond += OnSecondChanged;
     }
-
+    void Start()
+    {
+        name = NameGenerator.instance.GetName();
+        nameText.text = name;
+        InvokeRepeating(nameof(UpdateBars), .1f, .2f);
+    }
+    public Slider healthBar, energyBar;
+    public Text nameText;
+    void UpdateBars()
+    {
+        energyBar.value = energy.GetValue() / energy.GetMaxValue();
+        healthBar.value = health.GetValue() / energy.GetMaxValue();
+    }
     void OnDestroy()
     {
         Clock.instance.OnMorning -= OnMorning;
@@ -49,10 +62,17 @@ public class Player : Stats
         tringCost = power * coco.Tring;
         nightCost = coco.Night;
 
+        // Rangers();
         // Player Effects
         GetComponent<PlayerMotor>().SetSpeed(speed.GetValue());
     }
+    // void Rangers()
+    // {
+    //     var go1 = new GameObject { name = "Circle" };
+    //     go1.transform.position = new Vector3(transform.position.x, 1, transform.position.z);
 
+    //     go1.DrawCircle(1, .02f);
+    // }
     void SetStats()
     {
         // This method, iterates over all Stat fields of this instance.
@@ -135,7 +155,7 @@ public class Player : Stats
     {
         if (nerf) DeBuff(false);
         isHungry = true;
-        starvingAmount.Equalize();
+        starvingAmount.SetValue(starvingAmount.GetValue() + starvingAmount.GetMaxValue());
     }
     void OnEvening()
     {

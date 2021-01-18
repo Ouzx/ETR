@@ -71,6 +71,11 @@ public class PlayerController : MonoBehaviour
             RemoveFocus();
             motor.ToBase();
         }
+        else
+        {
+            RemoveFocus();
+            motor.GoBase();
+        }
     }
     void SetFocus(Interactable newFocus)
     {
@@ -90,8 +95,8 @@ public class PlayerController : MonoBehaviour
         {
             me.OnDefocused();
             focus = null;
-            motor.StopFollowingTarget();
         }
+        motor.StopFollowingTarget();
     }
 
 }

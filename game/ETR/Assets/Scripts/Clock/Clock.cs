@@ -26,8 +26,8 @@ public class Clock : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(1);
             OnSecond?.Invoke();
+            yield return new WaitForSeconds(1);
         }
     }
     #endregion
