@@ -38,9 +38,9 @@ public class Interactable : MonoBehaviour
                 {
                     Eat();
                 }
-                else if (target.interactableType != player.InteractableType)
+                else
                 {
-                    // Attack()
+                    Attack();
                 }
             }
         }
@@ -65,7 +65,13 @@ public class Interactable : MonoBehaviour
     {
         if (!alreadyInteracted)
         {
-            // player.Attack(); -> target.GetDamage();
+            if (player.InteractableType == InteractableTypes.Fred)
+                Debug.LogError(player.name + ": Attacked to => " + target.player.name + ": Damage: " + player.damage.GetValue());
+            else
+                Debug.LogWarning(player.name + ": Attacked to => " + target.player.name + ": Damage: " + player.damage.GetValue());
+
+            player.Attack();
+            target.player.GetDamage(-player.damage.GetValue());
             alreadyInteracted = true;
             Invoke(nameof(ResetInteraction), player.ispos.GetValue());
         }

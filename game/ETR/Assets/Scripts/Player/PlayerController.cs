@@ -51,16 +51,14 @@ public class PlayerController : MonoBehaviour
             }
             nearestEnemy = _nearestEnemy;
             nearestFood = _nearestFood;
-            yield return new WaitForSeconds(0.1f); // you can change it if player acts laggy
+            yield return new WaitForSeconds(Time.maximumDeltaTime); // you can change it if player acts laggy
         }
     }
 
     void Update()
     {
-
-        // If player at base but can see Enemy, attack!
         if (nearestEnemy != null) { SetFocus(nearestEnemy.GetComponent<Interactable>()); } // Attack or Escape
-        if (player.isHungry)
+        else if (player.isHungry)
         {
             if (nearestFood != null) { SetFocus(nearestFood.GetComponent<Interactable>()); } // Eat
             else { RemoveFocus(); motor.Patrol(); } // Patrol
@@ -76,6 +74,20 @@ public class PlayerController : MonoBehaviour
             motor.GoBase();
         }
     }
+
+    #region Enemy
+    void AnalysisEnemy(Interactable enemy)
+    {
+        // REVOLUTION POINT REQURED
+    }
+    bool CompareAbsolutePower()
+    {
+
+        return false;
+    }
+    #endregion
+
+    #region Focus
     void SetFocus(Interactable newFocus)
     {
         if (newFocus != focus)
@@ -100,5 +112,5 @@ public class PlayerController : MonoBehaviour
         }
         motor.StopFollowingTarget();
     }
-
+    #endregion
 }

@@ -27,7 +27,7 @@ public class Player : Stats
     void UpdateBars()
     {
         energyBar.value = energy.GetValue() / energy.GetMaxValue();
-        healthBar.value = health.GetValue() / energy.GetMaxValue();
+        healthBar.value = health.GetValue() / health.GetMaxValue();
     }
     void OnDestroy()
     {
