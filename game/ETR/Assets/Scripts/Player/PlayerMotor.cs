@@ -27,7 +27,7 @@ public class PlayerMotor : MonoBehaviour
     [SerializeField] Vector3 baseWalkPoint;
     [SerializeField] bool isBaseWalkPointSet;
 
-    [SerializeField] NavMeshAgent agent;
+    public NavMeshAgent agent;
     Transform target;
     void Start()
     {
@@ -75,15 +75,15 @@ public class PlayerMotor : MonoBehaviour
 
     public void FollowTarget(Interactable newTarget)
     {
+        isWalkPointSet = false;
+        isBaseWalkPointSet = false;
         agent.stoppingDistance = player.attackRange.GetMaxValue() * 0.8f;
         agent.updateRotation = false;
         target = newTarget.transform;
     }
     public void StopFollowingTarget()
     {
-
         agent.stoppingDistance = 0;
-        // agent.isStopped = true;
         agent.updateRotation = true;
         target = null;
     }
@@ -96,6 +96,7 @@ public class PlayerMotor : MonoBehaviour
 
     public void SetSpeed(float speed)
     {
+        if (speed <= 0) speed = 1;
         agent.acceleration = speed;
     }
     #endregion
@@ -103,13 +104,16 @@ public class PlayerMotor : MonoBehaviour
     #region  Patrolling
     public void Patrol()
     {
-        if (!isWalkPointSet) SearchWalkPoint();
-        if (isWalkPointSet)
+        if (target == null)
         {
-            MoveToPoint(walkPoint);
+            if (!isWalkPointSet) SearchWalkPoint();
+            if (isWalkPointSet)
+            {
+                MoveToPoint(walkPoint);
+            }
+            Vector3 distanceToWalkPoint = transform.position - walkPoint;
+            if (distanceToWalkPoint.magnitude < 1f) isWalkPointSet = false;
         }
-        Vector3 distanceToWalkPoint = transform.position - walkPoint;
-        if (distanceToWalkPoint.magnitude < 1f) isWalkPointSet = false;
     }
     void SearchWalkPoint()
     {
@@ -127,17 +131,20 @@ public class PlayerMotor : MonoBehaviour
     #region Base
     public void GoBase()
     {
-        if (!isBaseWalkPointSet) SearchBasePoint();
-        if (isBaseWalkPointSet)
+        if (target == null)
         {
-            MoveToPoint(baseWalkPoint);
+            if (!isBaseWalkPointSet) SearchBasePoint();
+            if (isBaseWalkPointSet)
+            {
+                MoveToPoint(baseWalkPoint);
+            }
+            Vector3 distanceToWalkPoint = transform.position - baseWalkPoint;
+            if (distanceToWalkPoint.magnitude < 1f) isBaseWalkPointSet = false;
         }
-        Vector3 distanceToWalkPoint = transform.position - baseWalkPoint;
-        if (distanceToWalkPoint.magnitude < 1f) isBaseWalkPointSet = false;
     }
     public void ToBase()
     {
-        MoveToPoint(GameObject.FindGameObjectWithTag("FredBase").transform.position);
+        MoveToPoint(PlayerBase.position);
     }
     void SearchBasePoint()
     {

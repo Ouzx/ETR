@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - FredBase
+  - BarneyBase
+  - IvedoBase
+  - Fred
+  - Barney
+  - Ivedo
   layers:
   - Default
   - TransparentFX
@@ -18,9 +23,9 @@ TagManager:
   - Ground
   - Food
   - BaseFred
-  - BaseBarne
+  - BaseBarney
   - BaseIvedo
-  - 
+  - Wall
   - 
   - 
   - 

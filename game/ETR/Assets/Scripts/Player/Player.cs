@@ -11,12 +11,13 @@ public class Player : Stats
     {
         SetStats();
         OnStatChanged();
-        Clock.instance.OnMorning += OnMorning;
-        Clock.instance.OnEvening += OnEvening;
-        Clock.instance.OnSecond += OnSecondChanged;
+
     }
     void Start()
     {
+        Clock.instance.OnMorning += OnMorning;
+        Clock.instance.OnEvening += OnEvening;
+        Clock.instance.OnSecond += OnSecondChanged;
         name = NameGenerator.instance.GetName();
         nameText.text = name;
         InvokeRepeating(nameof(UpdateBars), .1f, .2f);
@@ -28,12 +29,12 @@ public class Player : Stats
         energyBar.value = energy.GetValue() / energy.GetMaxValue();
         healthBar.value = health.GetValue() / energy.GetMaxValue();
     }
-    void OnDestroy()
-    {
-        Clock.instance.OnMorning -= OnMorning;
-        Clock.instance.OnEvening -= OnEvening;
-        Clock.instance.OnSecond -= OnSecondChanged;
-    }
+    // void OnDestroy()
+    // {
+    //     Clock.instance.OnMorning -= OnMorning;
+    //     Clock.instance.OnEvening -= OnEvening;
+    //     Clock.instance.OnSecond -= OnSecondChanged;
+    // }
 
     #region Stats and Costs
     public void OnStatChanged()

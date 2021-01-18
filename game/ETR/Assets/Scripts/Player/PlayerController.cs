@@ -58,6 +58,7 @@ public class PlayerController : MonoBehaviour
     public bool isAtBase;
     void Update()
     {
+        Debug.Log(motor.agent.destination);
         isAtBase = motor.isAtBase();
         // If player at base but can see Enemy, attack!
         if (nearestEnemy != null) { SetFocus(nearestEnemy.GetComponent<Interactable>()); } // Attack or Escape
@@ -81,6 +82,9 @@ public class PlayerController : MonoBehaviour
     {
         if (newFocus != focus)
         {
+            // motor.agent.isStopped = true;
+            // motor.agent.isStopped = false;
+            motor.agent.SetDestination(transform.position);
             if (focus != null)
                 me.OnDefocused();
             focus = newFocus;
@@ -93,8 +97,8 @@ public class PlayerController : MonoBehaviour
     {
         if (focus != null)
         {
-            me.OnDefocused();
             focus = null;
+            me.OnDefocused();
         }
         motor.StopFollowingTarget();
     }
