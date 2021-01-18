@@ -25,7 +25,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4227859536115617674, guid: 6d51aaaac7019034985f96e623453055, type: 3}
       propertyPath: m_Name
-      value: Barney
+      value: Barney Variant
       objectReference: {fileID: 0}
     - target: {fileID: 4227859536115617674, guid: 6d51aaaac7019034985f96e623453055, type: 3}
       propertyPath: m_IsActive
@@ -90,6 +90,10 @@ PrefabInstance:
     - target: {fileID: 4227859536115617685, guid: 6d51aaaac7019034985f96e623453055, type: 3}
       propertyPath: BaseLayer.m_Bits
       value: 4096
+      objectReference: {fileID: 0}
+    - target: {fileID: 4227859536115617685, guid: 6d51aaaac7019034985f96e623453055, type: 3}
+      propertyPath: GroundLayer.m_Bits
+      value: 4608
       objectReference: {fileID: 0}
     - target: {fileID: 4227859536411700575, guid: 6d51aaaac7019034985f96e623453055, type: 3}
       propertyPath: m_Materials.Array.data[0]

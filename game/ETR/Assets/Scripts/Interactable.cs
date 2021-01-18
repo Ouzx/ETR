@@ -16,9 +16,10 @@ public class Interactable : MonoBehaviour
     Player player;
     bool isFocused = false;
     Interactable target;
+    PlayerController pc;
     void Awake()
     {
-        PlayerController pc = GetComponent<PlayerController>();
+        pc = GetComponent<PlayerController>();
         if (pc != null)
         {
             player = GetComponent<PlayerController>().player;
@@ -36,10 +37,12 @@ public class Interactable : MonoBehaviour
             {
                 if (target.interactableType == InteractableTypes.Food)
                 {
+                    pc.state = State.Eating;
                     Eat();
                 }
                 else
                 {
+                    pc.state = State.Attacking;
                     Attack();
                 }
             }

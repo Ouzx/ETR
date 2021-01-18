@@ -6,6 +6,8 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public Player player;
+    public State state;
+
     public Interactable focus;
     Interactable me;
     public bool isAtBase;
@@ -15,8 +17,6 @@ public class PlayerController : MonoBehaviour
     // Collisions
     public Transform nearestFood, nearestEnemy;
     Transform _nearestFood, _nearestEnemy;
-
-
     void Start()
     {
         me = GetComponent<Interactable>();
@@ -59,19 +59,21 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         isAtBase = motor.isAtBase();
-        if (nearestEnemy != null) { SetFocus(nearestEnemy.GetComponent<Interactable>()); } // Attack or Escape
+        if (nearestEnemy != null) { state = State.ChasingEnemy; SetFocus(nearestEnemy.GetComponent<Interactable>()); } // Attack or Escape
         else if (player.isHungry)
         {
-            if (nearestFood != null) { SetFocus(nearestFood.GetComponent<Interactable>()); } // Eat
-            else { RemoveFocus(); motor.Patrol(); } // Patrol
+            if (nearestFood != null) { state = State.ChasingFood; SetFocus(nearestFood.GetComponent<Interactable>()); } // Eat
+            else { state = State.Patrolling; RemoveFocus(); motor.Patrol(); } // Patrol
         }
         else if (!isAtBase)
         {
+            state = State.GoingBase;
             RemoveFocus();
             motor.ToBase();
         }
         else
         {
+            state = State.WaitingAtBase;
             RemoveFocus();
             motor.GoBase();
         }
@@ -116,3 +118,5 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 }
+public enum State { WaitingAtBase, GoingBase, Patrolling, ChasingEnemy, ChasingFood, Attacking, Eating }
+
