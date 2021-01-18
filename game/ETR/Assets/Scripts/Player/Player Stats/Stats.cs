@@ -29,6 +29,12 @@ public class Stats : MonoBehaviour
     public Stat sightRange;
     #endregion
 
+    #region Regen
+    [Header("Regen")]
+    public float healthRegen;
+    public float energyRegen;
+    #endregion
+
     #region Costs
 
     [Header("Enery Costs")]
@@ -49,8 +55,8 @@ public class Stats : MonoBehaviour
     public int gen;
     public int killCount;
 
-    public Stat age;
-    public Stat birthDay;
+    public int age;
+    public int birthDay;
     #endregion
 
     #endregion

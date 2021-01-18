@@ -22,7 +22,7 @@ public class PlayerMotor : MonoBehaviour
     [SerializeField] bool isWalkPointSet;
 
     // Base
-    [SerializeField] Transform PlayerBase;
+    public Transform PlayerBase;
     [SerializeField] float baseRandomRange;
     [SerializeField] Vector3 baseWalkPoint;
     [SerializeField] bool isBaseWalkPointSet;
@@ -133,7 +133,7 @@ public class PlayerMotor : MonoBehaviour
     {
         if (target == null)
         {
-            if (!isBaseWalkPointSet) SearchBasePoint();
+            if (!isBaseWalkPointSet) { baseWalkPoint = RandomPointInBase(3); isBaseWalkPointSet = true; }
             if (isBaseWalkPointSet)
             {
                 MoveToPoint(baseWalkPoint);
@@ -146,23 +146,16 @@ public class PlayerMotor : MonoBehaviour
     {
         MoveToPoint(PlayerBase.position);
     }
-    void SearchBasePoint()
+
+    public Vector3 RandomPointInBase(float radius)
     {
-        float walkPointRange = baseRandomRange;
-        float randomZ = Random.Range(-walkPointRange, walkPointRange);
-        float randomX = Random.Range(-walkPointRange, walkPointRange);
-
-        baseWalkPoint = new Vector3(PlayerBase.position.x + randomX, transform.position.y, PlayerBase.position.z + randomZ);
-
-        if (Physics.Raycast(baseWalkPoint, -transform.up, 2f, BaseLayer))
-            isBaseWalkPointSet = true;
+        return PlayerBase.position + new Vector3(
+           (Random.value - 0.5f) * radius,
+           transform.position.y,
+           (Random.value - 0.5f) * radius
+        );
     }
+
     public bool isAtBase() => Physics.Raycast(transform.position, -transform.up, 2f, BaseLayer);
     #endregion
-
-    void OnDrawGizmosSelected()
-    {
-        UnityEditor.Handles.color = Color.magenta;
-        UnityEditor.Handles.DrawWireDisc(transform.position, transform.up, baseRandomRange);
-    }
 }

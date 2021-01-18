@@ -12,7 +12,18 @@ public class Food : MonoBehaviour
     }
     void Start()
     {
-        InvokeRepeating(nameof(UpdateScale), 0.5f, 0.05f);
+        UpdateScale();
+        Clock.instance.OnSecond += Regen;
+        // InvokeRepeating(nameof(UpdateScale), 0.5f, 0.05f);
+    }
+
+    void Regen()
+    {
+        if (remainingFood + regenerationAmount <= foodAmount) { remainingFood += regenerationAmount; UpdateScale(); }
+    }
+    void OnDestroy()
+    {
+        Clock.instance.OnSecond -= Regen;
     }
 
     void UpdateScale()
@@ -23,9 +34,11 @@ public class Food : MonoBehaviour
 
     public float Eat(float bite)
     {
+
         float tempAmount = remainingFood - bite;
         if (tempAmount > 0)
         {
+            UpdateScale();
             remainingFood = tempAmount;
             return bite;
         }
@@ -33,8 +46,8 @@ public class Food : MonoBehaviour
         {
             tempAmount = remainingFood;
             remainingFood = 0;
-            // Invoke(nameof(DestroyFood), 0.1f);
-            DestroyFood();
+            Invoke(nameof(DestroyFood), 0.1f);
+            // DestroyFood();
             return tempAmount;
         }
     }

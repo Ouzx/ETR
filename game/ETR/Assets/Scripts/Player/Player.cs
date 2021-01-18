@@ -7,11 +7,11 @@ public class Player : Stats
     [SerializeField] StatCoefficients stco;
     [SerializeField] CostCoefficients coco;
 
+    PlayerController playerController;
     void Awake()
     {
         SetStats();
         OnStatChanged();
-
     }
     void Start()
     {
@@ -20,7 +20,9 @@ public class Player : Stats
         Clock.instance.OnSecond += OnSecondChanged;
         name = NameGenerator.instance.GetName();
         nameText.text = name;
+        birthDay = Clock.instance.day;
         InvokeRepeating(nameof(UpdateBars), .1f, .2f);
+        playerController = GetComponent<PlayerController>();
     }
     public Slider healthBar, energyBar;
     public Text nameText;
@@ -153,20 +155,36 @@ public class Player : Stats
 
     #region OnDayChanged
     bool nerf = false;
+    bool isNight = true;
+    bool alreadyReproduced = true;
     void OnMorning()
     {
-        if (nerf) DeBuff(false);
+        isNight = false;
+        // Check: if player is not hungry: reproduce
+        if (!alreadyReproduced && !isHungry)
+        {
+            Reproduce();
+            alreadyReproduced = true;
+        }
+        else
+        {
+            alreadyReproduced = false;
+        }
+        if (nerf) DeBuff();
+        else age++;
         isHungry = true;
         starvingAmount.SetValue(starvingAmount.GetValue() + starvingAmount.GetMaxValue());
     }
+
     void OnEvening()
     {
+        isNight = true;
         // Debuff player stats
-        DeBuff(true);
+        DeBuff();
     }
 
     // Decrease sight range and speed
-    void DeBuff(bool isNight)
+    void DeBuff()
     {
         sbyte deBuffMultiplier = 1;
         if (!isNight) deBuffMultiplier = -1;
@@ -181,7 +199,31 @@ public class Player : Stats
     void OnSecondChanged()
     {
         if (isHungry) GetTired(tringCost);
+        else if (playerController.isAtBase)
+        {
+            HealthRegen();
+            EnergyRegen();
+        }
     }
     #endregion
 
+    #region Regen
+    void HealthRegen()
+    {
+        if (health.GetValue() + healthRegen <= health.GetMaxValue()) health.SetValue(health.GetValue() + healthRegen);
+    }
+    void EnergyRegen()
+    {
+        if (energy.GetValue() + energyRegen <= energy.GetMaxValue()) energy.SetValue(energy.GetValue() + energyRegen);
+    }
+    #endregion
+
+    #region Reproduce
+    void Reproduce()
+    {
+        GameObject child = Instantiate(gameObject, playerController.motor.RandomPointInBase(3), Quaternion.identity, transform.parent);
+        child.GetComponent<Player>().isHungry = true;
+        childCount++;
+    }
+    #endregion
 }

@@ -8,8 +8,9 @@ public class PlayerController : MonoBehaviour
     public Player player;
     public Interactable focus;
     Interactable me;
+    public bool isAtBase;
 
-    PlayerMotor motor;
+    [HideInInspector] public PlayerMotor motor;
 
     // Collisions
     public Transform nearestFood, nearestEnemy;
@@ -57,13 +58,14 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        isAtBase = motor.isAtBase();
         if (nearestEnemy != null) { SetFocus(nearestEnemy.GetComponent<Interactable>()); } // Attack or Escape
         else if (player.isHungry)
         {
             if (nearestFood != null) { SetFocus(nearestFood.GetComponent<Interactable>()); } // Eat
             else { RemoveFocus(); motor.Patrol(); } // Patrol
         }
-        else if (!motor.isAtBase())
+        else if (!isAtBase)
         {
             RemoveFocus();
             motor.ToBase();

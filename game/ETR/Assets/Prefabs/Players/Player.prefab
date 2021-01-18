@@ -674,8 +674,8 @@ GameObject:
   - component: {fileID: 4227859536115617680}
   - component: {fileID: 4227859536115617687}
   - component: {fileID: 4227859536115617684}
-  - component: {fileID: 4227859536115617682}
   - component: {fileID: 4227859536115617685}
+  - component: {fileID: 4227859536115617682}
   - component: {fileID: 4227859536115617675}
   m_Layer: 8
   m_Name: Player
@@ -752,7 +752,37 @@ MonoBehaviour:
   focus: {fileID: 0}
   nearestFood: {fileID: 0}
   nearestEnemy: {fileID: 0}
-  isAtBase: 0
+--- !u!114 &4227859536115617685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4227859536115617674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ace8fd4b10c7f24d8e8292c148b6a7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GroundLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  BaseLayer:
+    serializedVersion: 2
+    m_Bits: 2048
+  PlayerLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  FoodLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  walkPoint: {x: 0, y: 0, z: 0}
+  isWalkPointSet: 0
+  PlayerBase: {fileID: 0}
+  baseRandomRange: 4
+  baseWalkPoint: {x: 0, y: 0, z: 0}
+  isBaseWalkPointSet: 0
+  agent: {fileID: 4227859536115617680}
 --- !u!114 &4227859536115617682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -813,37 +843,6 @@ MonoBehaviour:
   healthBar: {fileID: 2201459750962077354}
   energyBar: {fileID: 2201459749775894057}
   nameText: {fileID: 8187281622497961664}
---- !u!114 &4227859536115617685
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4227859536115617674}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ace8fd4b10c7f24d8e8292c148b6a7a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GroundLayer:
-    serializedVersion: 2
-    m_Bits: 512
-  BaseLayer:
-    serializedVersion: 2
-    m_Bits: 2048
-  PlayerLayer:
-    serializedVersion: 2
-    m_Bits: 256
-  FoodLayer:
-    serializedVersion: 2
-    m_Bits: 1024
-  walkPoint: {x: 0, y: 0, z: 0}
-  isWalkPointSet: 0
-  PlayerBase: {fileID: 0}
-  baseRandomRange: 4
-  baseWalkPoint: {x: 0, y: 0, z: 0}
-  isBaseWalkPointSet: 0
-  agent: {fileID: 4227859536115617680}
 --- !u!114 &4227859536115617675
 MonoBehaviour:
   m_ObjectHideFlags: 0
