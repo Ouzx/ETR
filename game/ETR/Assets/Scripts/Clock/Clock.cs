@@ -26,7 +26,8 @@ public class Clock : MonoBehaviour
     {
         while (true)
         {
-            OnSecond?.Invoke();
+            if (OnSecond != null)
+                OnSecond?.Invoke();
             yield return new WaitForSeconds(1);
         }
     }
@@ -45,8 +46,8 @@ public class Clock : MonoBehaviour
     {
         tempTime += timeStep;
         dayTime = Mathf.Round(tempTime);
-        if (dayTime == 6 && timeKeys[0]) { OnMorning?.Invoke(); timeKeys[0] = false; }
-        else if (dayTime == 18 && timeKeys[1]) { OnEvening?.Invoke(); timeKeys[1] = false; }
+        if (dayTime == 6 && timeKeys[0]) { if (OnMorning != null) OnMorning?.Invoke(); timeKeys[0] = false; }
+        else if (dayTime == 18 && timeKeys[1]) { if (OnEvening != null) OnEvening?.Invoke(); timeKeys[1] = false; }
         else if (dayTime > 24)
         {
             timeKeys[0] = true; timeKeys[1] = true;

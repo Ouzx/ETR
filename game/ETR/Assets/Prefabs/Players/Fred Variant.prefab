@@ -25,7 +25,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4227859536115617674, guid: 6d51aaaac7019034985f96e623453055, type: 3}
       propertyPath: m_Name
-      value: Fred
+      value: Fred Variant (1)
       objectReference: {fileID: 0}
     - target: {fileID: 4227859536115617674, guid: 6d51aaaac7019034985f96e623453055, type: 3}
       propertyPath: m_TagString
@@ -45,7 +45,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4227859536115617681, guid: 6d51aaaac7019034985f96e623453055, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -6.81
       objectReference: {fileID: 0}
     - target: {fileID: 4227859536115617681, guid: 6d51aaaac7019034985f96e623453055, type: 3}
       propertyPath: m_LocalRotation.w
@@ -78,6 +78,6 @@ PrefabInstance:
     - target: {fileID: 4227859536115617685, guid: 6d51aaaac7019034985f96e623453055, type: 3}
       propertyPath: PlayerBase
       value: 
-      objectReference: {fileID: 9212607054973583753, guid: a0567600d11035848beb37926c390e01, type: 3}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6d51aaaac7019034985f96e623453055, type: 3}

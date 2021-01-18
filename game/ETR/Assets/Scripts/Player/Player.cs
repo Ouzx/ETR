@@ -29,12 +29,13 @@ public class Player : Stats
         energyBar.value = energy.GetValue() / energy.GetMaxValue();
         healthBar.value = health.GetValue() / energy.GetMaxValue();
     }
-    // void OnDestroy()
-    // {
-    //     Clock.instance.OnMorning -= OnMorning;
-    //     Clock.instance.OnEvening -= OnEvening;
-    //     Clock.instance.OnSecond -= OnSecondChanged;
-    // }
+    void OnDestroy()
+    {
+        CancelInvoke();
+        Clock.instance.OnMorning -= OnMorning;
+        Clock.instance.OnEvening -= OnEvening;
+        Clock.instance.OnSecond -= OnSecondChanged;
+    }
 
     #region Stats and Costs
     public void OnStatChanged()
@@ -145,7 +146,7 @@ public class Player : Stats
     }
     public void DestroyMe()
     {
-        Destroy(gameObject);
+        GameObject.Destroy(gameObject, 0.2f);
     }
 
     #endregion

@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour
             {
                 foreach (Collider col in enemies)
                 {
-                    if (col.gameObject != gameObject) // Check for player type before checking collisions
+                    if (col.GetComponent<Player>().InteractableType != player.InteractableType)
                         if (_nearestEnemy == null) _nearestEnemy = col.transform;
                         else if (Vector3.Distance(transform.position, col.transform.position) < Vector3.Distance(transform.position, _nearestEnemy.position)) _nearestEnemy = col.transform;
                 }
@@ -55,11 +55,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public bool isAtBase;
     void Update()
     {
-        Debug.Log(motor.agent.destination);
-        isAtBase = motor.isAtBase();
+
         // If player at base but can see Enemy, attack!
         if (nearestEnemy != null) { SetFocus(nearestEnemy.GetComponent<Interactable>()); } // Attack or Escape
         if (player.isHungry)
@@ -67,7 +65,7 @@ public class PlayerController : MonoBehaviour
             if (nearestFood != null) { SetFocus(nearestFood.GetComponent<Interactable>()); } // Eat
             else { RemoveFocus(); motor.Patrol(); } // Patrol
         }
-        else if (!isAtBase)
+        else if (!motor.isAtBase())
         {
             RemoveFocus();
             motor.ToBase();
@@ -84,7 +82,7 @@ public class PlayerController : MonoBehaviour
         {
             // motor.agent.isStopped = true;
             // motor.agent.isStopped = false;
-            motor.agent.SetDestination(transform.position);
+            // motor.agent.SetDestination(transform.position);
             if (focus != null)
                 me.OnDefocused();
             focus = newFocus;
