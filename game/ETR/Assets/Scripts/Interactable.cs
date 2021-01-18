@@ -46,13 +46,29 @@ public class Interactable : MonoBehaviour
         }
     }
     #region Interaction
+    bool alreadyInteracted;
+    void ResetInteraction()
+    {
+        alreadyInteracted = false;
+    }
     void Eat()
     {
-        player.Eat(target.GetComponent<Food>().Eat(player.damage.GetValue()));
+        if (!alreadyInteracted)
+        {
+            player.Eat(target.GetComponent<Food>().Eat(player.damage.GetValue()));
+            alreadyInteracted = true;
+            Invoke(nameof(ResetInteraction), 1 / player.ispos.GetValue());
+        }
     }
+
     void Attack()
     {
-        // player.Attack(); -> target.GetDamage();
+        if (!alreadyInteracted)
+        {
+            // player.Attack(); -> target.GetDamage();
+            alreadyInteracted = true;
+            Invoke(nameof(ResetInteraction), player.ispos.GetValue());
+        }
     }
     #endregion
 
