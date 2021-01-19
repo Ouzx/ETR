@@ -68,7 +68,7 @@ public class Player : Stats
 
         // Rangers();
         // Player Effects
-        GetComponent<PlayerMotor>().SetSpeed(speed.GetValue());
+            GetComponent<PlayerMotor>().SetSpeed(speed.GetValue());
     }
     // void Rangers()
     // {
@@ -77,7 +77,7 @@ public class Player : Stats
 
     //     go1.DrawCircle(1, .02f);
     // }
-    void SetStats()
+    public void SetStats()
     {
         // This method, iterates over all Stat fields of this instance.
         // and point this class to player.temp class
@@ -157,7 +157,7 @@ public class Player : Stats
     bool nerf = false;
     bool isNight = true;
     bool alreadyReproduced = true;
-    void OnMorning()
+    public void OnMorning()
     {
         isNight = false;
         // Check: if player is not hungry: reproduce
@@ -176,7 +176,7 @@ public class Player : Stats
         starvingAmount.SetValue(starvingAmount.GetValue() + starvingAmount.GetMaxValue());
     }
 
-    void OnEvening()
+    public void OnEvening()
     {
         isNight = true;
         // Debuff player stats
@@ -196,7 +196,7 @@ public class Player : Stats
     #endregion
 
     #region OnSecondChanged
-    void OnSecondChanged()
+    public void OnSecondChanged()
     {
         if (isHungry) GetTired(tringCost);
         else if (playerController.isAtBase)
@@ -210,11 +210,11 @@ public class Player : Stats
     #region Regen
     void HealthRegen()
     {
-        if (health.GetValue() + healthRegen <= health.GetMaxValue()) health.SetValue(health.GetValue() + healthRegen);
+        if (health.GetValue() + healthRegen <= health.GetMaxValue()) health.AppendValue(healthRegen);
     }
     void EnergyRegen()
     {
-        if (energy.GetValue() + energyRegen <= energy.GetMaxValue()) energy.SetValue(energy.GetValue() + energyRegen);
+        if (energy.GetValue() + energyRegen <= energy.GetMaxValue()) energy.AppendValue(energyRegen);
     }
     #endregion
 

@@ -131,6 +131,7 @@ GameObject:
   - component: {fileID: 3615005593362542105}
   - component: {fileID: 5956729641232451705}
   - component: {fileID: 1932504303662385993}
+  - component: {fileID: 5734453886774709739}
   m_Layer: 5
   m_Name: Controller Bar
   m_TagString: Untagged
@@ -199,6 +200,22 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 3.86
+--- !u!114 &5734453886774709739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 457460686277398487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6c55fed886bb174f99fb70c3070e477, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  increaser: {fileID: 2299925384015469445}
+  decreaser: {fileID: 3226664657454695392}
+  statType: 
+  Increasement: 0.5
 --- !u!1 &2917734837715212869
 GameObject:
   m_ObjectHideFlags: 0
