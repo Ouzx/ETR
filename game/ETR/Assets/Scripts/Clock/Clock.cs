@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
-
-[ExecuteAlways]
+using TMPro;
 public class Clock : MonoBehaviour
 {
     #region Singleton
@@ -39,13 +38,15 @@ public class Clock : MonoBehaviour
     [Range(0, 24)] public float dayTime;
 
     [Range(0, 1f)] public float timeStep;
+    [SerializeField] TextMeshProUGUI clock;
     #endregion
 
     bool[] timeKeys = { true, true };
     void FixedUpdate()
     {
         tempTime += timeStep;
-        dayTime = Mathf.Round(tempTime);
+
+        SetClock();
         if (dayTime == 6 && timeKeys[0]) { if (OnMorning != null) OnMorning?.Invoke(); timeKeys[0] = false; }
         else if (dayTime == 18 && timeKeys[1]) { if (OnEvening != null) OnEvening?.Invoke(); timeKeys[1] = false; }
         else if (dayTime > 24)
@@ -54,5 +55,19 @@ public class Clock : MonoBehaviour
             tempTime = 0;
             day++;
         }
+    }
+
+    void SetClock()
+    {
+        dayTime = Mathf.Round(tempTime);
+        int clockTimeLeft = Mathf.FloorToInt(tempTime);
+        string clockTimeRight = Mathf.Round(ScaleTime(tempTime - clockTimeLeft) * 100).ToString("00");
+        clock.text = clockTimeLeft.ToString("00") + ":" + clockTimeRight;
+    }
+    float ScaleTime(float OldValue)
+    {
+        float NewValue = (OldValue * 60 / 100);
+
+        return (NewValue);
     }
 }
