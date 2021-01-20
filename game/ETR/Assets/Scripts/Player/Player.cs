@@ -6,7 +6,7 @@ public class Player : Stats
 {
     [SerializeField] StatCoefficients stco;
     [SerializeField] CostCoefficients coco;
-
+    public int epOnMorning;
     PlayerController playerController;
     void Awake()
     {
@@ -171,7 +171,8 @@ public class Player : Stats
             alreadyReproduced = false;
         }
         if (nerf) DeBuff();
-        else age++;
+        GameManager.instance.EarnEP(epOnMorning, InteractableType);
+        age++;
         isHungry = true;
         starvingAmount.SetValue(starvingAmount.GetValue() + starvingAmount.GetMaxValue());
     }

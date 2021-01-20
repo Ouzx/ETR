@@ -39,6 +39,7 @@ public class Clock : MonoBehaviour
 
     [Range(0, 1f)] public float timeStep;
     [SerializeField] TextMeshProUGUI clock;
+    [SerializeField] TextMeshProUGUI dayText;
     #endregion
 
     bool[] timeKeys = { true, true };
@@ -54,6 +55,7 @@ public class Clock : MonoBehaviour
             timeKeys[0] = true; timeKeys[1] = true;
             tempTime = 0;
             day++;
+            dayText.text = day.ToString();
         }
     }
 

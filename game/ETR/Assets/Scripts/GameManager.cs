@@ -33,25 +33,39 @@ public class GameManager : MonoBehaviour
     }
 
     #region EP RP
-    public void EarnEP(int amount) => EvolutionPoint += amount;
+    public void EarnEP(int amount, InteractableTypes interactableTypes)
+    {
+        if (interactableTypes != uiPlayer.interactableTypes) return;
+        EvolutionPoint += amount;
+        OnUIUpdate?.Invoke(EvolutionPoint, RevolutionPoint);
+    }
     public bool SpendEP(int amount)
     {
         if (EvolutionPoint - amount >= 0)
         {
+            OnUIUpdate?.Invoke(EvolutionPoint, RevolutionPoint);
             EvolutionPoint -= amount;
             return true;
         }
+        OnUIUpdate?.Invoke(EvolutionPoint, RevolutionPoint);
         return false;
     }
 
-    public void EarnRP(int amount) => RevolutionPoint += amount;
+    public void EarnRP(int amount, InteractableTypes interactableTypes)
+    {
+        if (interactableTypes != uiPlayer.interactableTypes) return;
+        RevolutionPoint += amount;
+        OnUIUpdate?.Invoke(EvolutionPoint, RevolutionPoint);
+    }
     public bool SpendRP(int amount)
     {
         if (RevolutionPoint - amount >= 0)
         {
             RevolutionPoint -= amount;
+            OnUIUpdate?.Invoke(EvolutionPoint, RevolutionPoint);
             return true;
         }
+        OnUIUpdate?.Invoke(EvolutionPoint, RevolutionPoint);
         return false;
     }
     #endregion

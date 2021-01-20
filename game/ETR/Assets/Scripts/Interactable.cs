@@ -17,6 +17,7 @@ public class Interactable : MonoBehaviour
     bool isFocused = false;
     Interactable target;
     PlayerController pc;
+    public int epOnEat, epOnHit;
     void Awake()
     {
         pc = GetComponent<PlayerController>();
@@ -59,6 +60,7 @@ public class Interactable : MonoBehaviour
         if (!alreadyInteracted)
         {
             player.Eat(target.GetComponent<Food>().Eat(player.damage.GetValue()));
+            GameManager.instance.EarnEP(epOnEat, player.InteractableType);
             alreadyInteracted = true;
             Invoke(nameof(ResetInteraction), 1 / player.ispos.GetValue());
         }
@@ -68,12 +70,8 @@ public class Interactable : MonoBehaviour
     {
         if (!alreadyInteracted)
         {
-            if (player.InteractableType == InteractableTypes.Fred)
-                Debug.LogError(player.name + ": Attacked to => " + target.player.name + ": Damage: " + player.damage.GetValue());
-            else
-                Debug.LogWarning(player.name + ": Attacked to => " + target.player.name + ": Damage: " + player.damage.GetValue());
-
             player.Attack();
+            GameManager.instance.EarnEP(epOnHit, player.InteractableType);
             target.player.GetDamage(-player.damage.GetValue());
             alreadyInteracted = true;
             Invoke(nameof(ResetInteraction), player.ispos.GetValue());

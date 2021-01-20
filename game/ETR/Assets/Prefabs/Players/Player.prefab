@@ -165,12 +165,8 @@ MonoBehaviour:
   sightRange:
     temp: {fileID: 4227859536115617682}
     maxValue: 10
-  healthRegen:
-    temp: {fileID: 0}
-    maxValue: 5
-  energyRegen:
-    temp: {fileID: 0}
-    maxValue: 5
+  healthRegen: 0
+  energyRegen: 0
   starvingCost: -3.86
   walkingCost: -1.93
   attackingCost: -5.79
@@ -183,6 +179,7 @@ MonoBehaviour:
   birthDay: 0
   stco: {fileID: 11400000, guid: bb952597a386f39439a8d972432f356c, type: 2}
   coco: {fileID: 11400000, guid: d9a292c622e98bf439bf8f553fb7b1cc, type: 2}
+  epOnMorning: 10
   healthBar: {fileID: 7903154208939897522}
   energyBar: {fileID: 7903154207700716081}
   nameText: {fileID: 198037825592478424}
@@ -199,6 +196,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactableType: 0
+  epOnEat: 5
+  epOnHit: 20
 --- !u!1 &4227859536411700573
 GameObject:
   m_ObjectHideFlags: 0
