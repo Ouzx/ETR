@@ -118,6 +118,7 @@ public class PlayerMotor : MonoBehaviour
     void SearchWalkPoint()
     {
         float walkPointRange = player.walkPointRange;
+        if (isAtBase()) walkPointRange *= 1.5f; 
         float randomZ = Random.Range(-walkPointRange, walkPointRange);
         float randomX = Random.Range(-walkPointRange, walkPointRange);
 
@@ -133,7 +134,7 @@ public class PlayerMotor : MonoBehaviour
     {
         if (target == null)
         {
-            if (!isBaseWalkPointSet) { baseWalkPoint = RandomPointInBase(3); isBaseWalkPointSet = true; }
+            if (!isBaseWalkPointSet) { baseWalkPoint = RandomPointInBase(15,5); isBaseWalkPointSet = true; }
             if (isBaseWalkPointSet)
             {
                 MoveToPoint(baseWalkPoint);
@@ -147,12 +148,12 @@ public class PlayerMotor : MonoBehaviour
         MoveToPoint(PlayerBase.position);
     }
 
-    public Vector3 RandomPointInBase(float radius)
+    public Vector3 RandomPointInBase(float radiusX, float radiusZ)
     {
         return PlayerBase.position + new Vector3(
-           (Random.value - 0.5f) * radius,
+           (Random.value - 0.5f) * radiusX,
            transform.position.y,
-           (Random.value - 0.5f) * radius
+           (Random.value - 0.5f) * radiusZ
         );
     }
 

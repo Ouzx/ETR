@@ -222,7 +222,7 @@ public class Player : Stats
     #region Reproduce
     void Reproduce()
     {
-        GameObject child = Instantiate(gameObject, playerController.motor.RandomPointInBase(3), Quaternion.identity, transform.parent);
+        GameObject child = Instantiate(gameObject, playerController.motor.RandomPointInBase(3,3), Quaternion.identity, transform.parent);
         child.GetComponent<Player>().isHungry = true;
         childCount++;
     }

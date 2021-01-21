@@ -2,7 +2,7 @@
 [System.Serializable]
 public class Stat
 {
-     public Player temp;
+    [HideInInspector] public Player temp;
     [SerializeField] float maxValue;
     float value;
 
