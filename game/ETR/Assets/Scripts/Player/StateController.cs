@@ -3,14 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class StateController : MonoBehaviour
-{
-    #region Singleton
-    public static StateController instance;
-    void Awake()
-    {
-        if (instance == null) instance = this;    
-    }
-    #endregion
+{  
     Animator anim;
     void Start()
     {
@@ -38,7 +31,14 @@ public class StateController : MonoBehaviour
             anim.ResetTrigger("jog");
             anim.SetTrigger("eat");
         }
+        else
+        {
+            anim.ResetTrigger("attack");
+            anim.ResetTrigger("eat");
+            anim.ResetTrigger("jog");
+            anim.SetTrigger("die");
+        }
     }
 }
-public enum State { WaitingAtBase, GoingBase, Patrolling, ChasingEnemy, ChasingFood, Attacking, Eating, Idle }
+public enum State { WaitingAtBase, GoingBase, Patrolling, ChasingEnemy, ChasingFood, Attacking, Eating, Idle, Dead }
 

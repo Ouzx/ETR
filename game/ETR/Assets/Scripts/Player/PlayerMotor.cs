@@ -15,6 +15,7 @@ public class PlayerMotor : MonoBehaviour
      * - Step delay: Time.deltaTime * 2
     */
     public LayerMask GroundLayer, BaseLayer, PlayerLayer, FoodLayer;
+    PlayerController pc;
     Player player;
 
     // Patrolling
@@ -31,6 +32,7 @@ public class PlayerMotor : MonoBehaviour
     Transform target;
     void Start()
     {
+        pc = GetComponent<PlayerController>();
         player = GetComponent<PlayerController>().player;
         StartCoroutine(nameof(TargetChecker));
         StartCoroutine(nameof(Stepper));
@@ -70,6 +72,8 @@ public class PlayerMotor : MonoBehaviour
     #region Movement
     public void MoveToPoint(Vector3 point)
     {
+        point.y = 0;
+        pc.stateController.OnStateChanged(State.Patrolling);
         agent.SetDestination(point);
     }
 
@@ -118,13 +122,13 @@ public class PlayerMotor : MonoBehaviour
     void SearchWalkPoint()
     {
         float walkPointRange = player.walkPointRange;
-        if (isAtBase()) walkPointRange *= 1.5f; 
+        //if (isAtBase()) walkPointRange *= .5f; 
         float randomZ = Random.Range(-walkPointRange, walkPointRange);
         float randomX = Random.Range(-walkPointRange, walkPointRange);
 
         walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
 
-        if (Physics.Raycast(walkPoint, -transform.up, 2f, GroundLayer))
+        if (Physics.Raycast(walkPoint, -transform.up, 2, GroundLayer))
             isWalkPointSet = true;
     }
     #endregion
@@ -134,7 +138,7 @@ public class PlayerMotor : MonoBehaviour
     {
         if (target == null)
         {
-            if (!isBaseWalkPointSet) { baseWalkPoint = RandomPointInBase(15,5); isBaseWalkPointSet = true; }
+            if (!isBaseWalkPointSet) { baseWalkPoint = RandomPointInBase(6,5); isBaseWalkPointSet = true; }
             if (isBaseWalkPointSet)
             {
                 MoveToPoint(baseWalkPoint);
@@ -159,4 +163,11 @@ public class PlayerMotor : MonoBehaviour
 
     public bool isAtBase() => Physics.Raycast(transform.position, -transform.up, 2f, BaseLayer);
     #endregion
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.black;
+    //    Gizmos.DrawWireSphere(transform.position, 8);
+    //    Gizmos.color = Color.red;
+    //    Gizmos.DrawWireSphere(transform.position, 5);
+    //}
 }

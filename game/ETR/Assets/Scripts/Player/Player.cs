@@ -108,7 +108,8 @@ public class Player : Stats
         }
         else
         {
-            DestroyMe();
+            playerController.stateController.OnStateChanged(State.Dead);
+            Invoke(nameof(DestroyMe),10f);
         }
     }
 
@@ -222,7 +223,7 @@ public class Player : Stats
     #region Reproduce
     void Reproduce()
     {
-        GameObject child = Instantiate(gameObject, playerController.motor.RandomPointInBase(3,3), Quaternion.identity, transform.parent);
+        GameObject child = Instantiate(gameObject, playerController.motor.RandomPointInBase(5,5), Quaternion.identity, transform.parent);
         child.GetComponent<Player>().isHungry = true;
         childCount++;
     }

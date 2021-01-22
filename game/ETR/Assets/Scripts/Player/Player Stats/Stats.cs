@@ -61,13 +61,13 @@ public class Stats : MonoBehaviour
 
     #endregion
 
-    void OnDrawGizmosSelected()
-    {
-        UnityEditor.Handles.color = Color.blue;
-        UnityEditor.Handles.DrawWireDisc(transform.position, transform.up, walkPointRange);
-        UnityEditor.Handles.color = Color.red;
-        UnityEditor.Handles.DrawWireDisc(transform.position, transform.up, sightRange.GetMaxValue());
-        UnityEditor.Handles.color = Color.black;
-        UnityEditor.Handles.DrawWireDisc(transform.position, transform.up, attackRange.GetMaxValue());
-    }
+    //void OnDrawGizmosSelected()
+    //{
+    //    UnityEditor.Handles.color = Color.blue;
+    //    UnityEditor.Handles.DrawWireDisc(transform.position, transform.up, walkPointRange);
+    //    UnityEditor.Handles.color = Color.red;
+    //    UnityEditor.Handles.DrawWireDisc(transform.position, transform.up, sightRange.GetMaxValue());
+    //    UnityEditor.Handles.color = Color.black;
+    //    UnityEditor.Handles.DrawWireDisc(transform.position, transform.up, attackRange.GetMaxValue());
+    //}
 }

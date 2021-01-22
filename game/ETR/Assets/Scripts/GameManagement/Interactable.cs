@@ -39,13 +39,13 @@ public class Interactable : MonoBehaviour
                 if (target.interactableType == InteractableTypes.Food)
                 {
                     pc.state = State.Eating;
-                    StateController.instance.OnStateChanged(State.Eating);
+                    pc.stateController.OnStateChanged(State.Eating);
                     Eat();
                 }
                 else
                 {
                     pc.state = State.Attacking;
-                    StateController.instance.OnStateChanged(State.Attacking);
+                    pc.stateController.OnStateChanged(State.Attacking);
                     Attack();
                 }
             }

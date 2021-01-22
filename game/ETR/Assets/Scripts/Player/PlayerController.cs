@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public Player player;
+    public StateController stateController;
     public State state;
 
     public Interactable focus;
@@ -22,6 +23,7 @@ public class PlayerController : MonoBehaviour
         me = GetComponent<Interactable>();
         motor = GetComponent<PlayerMotor>();
         StartCoroutine(nameof(TriggerChecker));
+        stateController = transform.GetChild(1).GetComponent<StateController>();
     }
 
     IEnumerator TriggerChecker()
@@ -59,23 +61,21 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         isAtBase = motor.isAtBase();
-        if (nearestEnemy != null) { state = State.ChasingEnemy; StateController.instance.OnStateChanged(state); SetFocus(nearestEnemy.GetComponent<Interactable>()); } // Attack or Escape
+        if (nearestEnemy != null) { state = State.ChasingEnemy; SetFocus(nearestEnemy.GetComponent<Interactable>()); } // Attack or Escape
         else if (player.isHungry)
         {
-            if (nearestFood != null) { state = State.ChasingFood; StateController.instance.OnStateChanged(state); SetFocus(nearestFood.GetComponent<Interactable>()); } // Eat
-            else { state = State.Patrolling; StateController.instance.OnStateChanged(state); RemoveFocus(); motor.Patrol(); } // Patrol
+            if (nearestFood != null) { state = State.ChasingFood; SetFocus(nearestFood.GetComponent<Interactable>()); } // Eat
+            else { state = State.Patrolling; RemoveFocus(); motor.Patrol(); } // Patrol
         }
         else if (!isAtBase)
         {
             state = State.GoingBase;
-            StateController.instance.OnStateChanged(state);
             RemoveFocus();
             motor.ToBase();
         }
         else
         {
             state = State.WaitingAtBase;
-            StateController.instance.OnStateChanged(state);
             RemoveFocus();
             motor.GoBase();
         }
